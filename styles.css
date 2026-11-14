@@ -206,6 +206,7 @@ a{color:inherit}
   font-size:clamp(1.25rem,3vw,1.65rem);
   letter-spacing:.14em;
   text-wrap:balance;
+  word-break:auto-phrase;
 }
 
 .section-note{
