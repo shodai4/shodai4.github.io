@@ -14,7 +14,8 @@
 | `app-ads.txt` | AdMob 用（`pub-5739782559889389`）。`shodai4/territory-walk` の同ファイルと同一内容 |
 | `robots.txt` / `sitemap.xml` | 検索エンジン向け |
 | `.nojekyll` | Jekyll ビルドをスキップ |
-| `assets/territory-walk.png` | TERRITORY WALK のスクリーンショット |
+| `assets/territory-walk.jpg` | TERRITORY WALK のスクリーンショット（1600px・約317KB） |
+| `assets/og.jpg` | OGP/Twitterカード用（1200×630） |
 
 ## 公開手順（GitHub Pages）
 
@@ -32,5 +33,4 @@
 
 ## 未対応（あとで）
 
-- `og:image` の最適化（現在は `assets/territory-walk.png` をそのまま指定）
 - 作品・アプリが増えたらトップに追加する（他6本は当面出さない方針）
