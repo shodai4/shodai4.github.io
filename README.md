@@ -1,21 +1,30 @@
 # shodai4.com — ポートフォリオ
 
 `shodai4.com` で公開する個人サイト（静的HTML/CSSのみ・ビルド不要）。
-前面に出すのは iOS / Web アプリ **TERRITORY WALK** の1本と、絵の活動（アトリエ三月 年末展2026・ZINE・BASEショップ）。
+トップは「しょうだい（shodai4）の制作の置き場」で、前面に出すアプリは iOS / Web の **TERRITORY WALK** 1本、
+絵の活動（アトリエ三月 年末展2026・ZINE・BASEショップ）を並べている。
 
 ## 中身
 
 | ファイル | 役割 |
 | --- | --- |
-| `index.html` | トップページ（TERRITORY WALK／描いたもの／つくる人／つながる） |
+| `index.html` | トップページ（つくったもの／描いたもの／つくる人／つながる） |
+| `apps/territory-walk/index.html` | TERRITORY WALK 専用の紹介ページ（`/apps/territory-walk/`） |
 | `styles.css` | 全スタイル（外部フォント・外部JSなし） |
 | `404.html` | 404ページ |
 | `CNAME` | `shodai4.com`（GitHub Pages のカスタムドメイン） |
 | `app-ads.txt` | AdMob 用（`pub-5739782559889389`）。`shodai4/territory-walk` の同ファイルと同一内容 |
-| `robots.txt` / `sitemap.xml` | 検索エンジン向け |
+| `robots.txt` / `sitemap.xml` | 検索エンジン向け（トップと `/apps/territory-walk/` を収録） |
 | `.nojekyll` | Jekyll ビルドをスキップ |
 | `assets/territory-walk.jpg` | TERRITORY WALK のスクリーンショット（1600px・約317KB） |
 | `assets/og.jpg` | OGP/Twitterカード用（1200×630） |
+
+## URLの分担（重要）
+
+- `https://shodai4.com/` — このリポジトリ（`shodai4/shodai4.github.io`）
+- `https://shodai4.com/apps/territory-walk/` — このリポジトリの紹介ページ
+- `https://shodai4.com/territory-walk/` — **別リポジトリ** `shodai4/territory-walk` の GitHub Pages（実際に遊ぶアプリ本体）
+  - このリポジトリに `territory-walk/` フォルダを作ると競合するので作らない。紹介ページは必ず `apps/territory-walk/`。
 
 ## 公開手順（GitHub Pages）
 
@@ -33,4 +42,4 @@
 
 ## 未対応（あとで）
 
-- 作品・アプリが増えたらトップに追加する（他6本は当面出さない方針）
+- 作品・アプリが増えたらトップの「つくったもの」に追加する（他6本は当面出さない方針）

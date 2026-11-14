@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TERRITORY WALK と、描いたもの。 — shodai4</title>
-<meta name="description" content="歩いた道が白黒の陣地になるウォーキング・ゲーム「TERRITORY WALK」。大阪でWebアプリと絵をつくる、しょうだい（shodai4）のサイトです。">
+<title>shodai4 — つくったものと、描いたもの。</title>
+<meta name="description" content="大阪でWebアプリと絵をつくる、しょうだい（shodai4）の制作の置き場。歩いた道が陣地になるウォーキング・ゲーム「TERRITORY WALK」と、油絵・ZINEの活動をまとめています。">
 <link rel="canonical" href="https://shodai4.com/">
 <meta name="theme-color" content="#f4f1ea">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="shodai4.com">
-<meta property="og:title" content="TERRITORY WALK と、描いたもの。 — shodai4">
-<meta property="og:description" content="歩いた道が白黒の陣地になるウォーキング・ゲーム。ブラウザですぐ遊べます。">
+<meta property="og:title" content="shodai4 — つくったものと、描いたもの。">
+<meta property="og:description" content="大阪でWebアプリと絵をつくる、しょうだい（shodai4）の制作の置き場。">
 <meta property="og:url" content="https://shodai4.com/">
 <meta property="og:image" content="https://shodai4.com/assets/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -32,7 +32,7 @@
 </script>
 </head>
 <body>
-<a class="skip" href="#app">本文へ</a>
+<a class="skip" href="#apps">本文へ</a>
 
 <header class="site-header">
   <a class="brand" href="/">
@@ -40,7 +40,7 @@
     <span class="brand-text">shodai4<span class="brand-dot">.com</span></span>
   </a>
   <nav class="site-nav" aria-label="メニュー">
-    <a href="#app">アプリ</a>
+    <a href="#apps">つくったもの</a>
     <a href="#art">描いたもの</a>
     <a href="#maker">つくる人</a>
     <a href="#contact">つながる</a>
@@ -48,51 +48,44 @@
 </header>
 
 <main>
-  <section class="hero">
-    <p class="eyebrow">ウォーキング・ゲーム / iOS・Web</p>
-    <h1 class="hero-title">TERRITORY<br>WALK</h1>
-    <p class="hero-tagline">歩いた場所が、陣地になる。</p>
+  <section class="hero hero--top">
+    <p class="eyebrow">shodai4 — 大阪</p>
+    <h1 class="hero-title">つくったものと、<br>描いたもの。</h1>
+    <p class="hero-tagline">アプリと、絵。</p>
     <p class="hero-lead">
-      白と黒だけの地図の上で、歩いた道が自分の陣地に変わる。
-      歩けば歩くほど盤面は広がり、同じ街を歩く誰かと陣地を奪い合う。
-      位置情報からつくった、ひとりで歩くためのゲームです。
+      しょうだい（shodai4）の制作の置き場です。大阪でエンジニアをしながら、
+      自分の困りごとから始めたWebアプリと、油絵を描いています。
+      できたものは、ここから辿れます。
     </p>
     <div class="cta">
-      <a class="btn btn--primary" href="https://shodai4.github.io/territory-walk/" target="_blank" rel="noopener">ブラウザで遊ぶ</a>
-      <a class="btn" href="#app">くわしく見る</a>
+      <a class="btn btn--primary" href="#apps">つくったもの</a>
+      <a class="btn" href="#art">描いたもの</a>
     </div>
-    <p class="hero-note">インストール不要・無料 ／ iOS版は TestFlight でテスト配信中</p>
   </section>
 
-  <figure class="shot">
-    <div class="shot-frame">
-      <img src="assets/territory-walk.jpg" alt="TERRITORY WALK の画面。白黒の地図の上に、歩いて広げた陣地が表示されている。" width="1600" height="827">
-    </div>
-    <figcaption>歩いた軌跡がそのまま陣地として残る。地図は白黒の2色だけ。</figcaption>
-  </figure>
-
-  <section id="app" class="section">
+  <section id="apps" class="section">
     <div class="section-head">
-      <h2 class="section-title">歩くことが、そのまま陣地になる</h2>
+      <h2 class="section-title">つくったもの</h2>
+      <p class="section-note">自分で使い続けたいものだけをつくっています。</p>
     </div>
 
-    <div class="features">
-      <article class="feature">
-        <p class="feature-num">01</p>
-        <h3>歩いた道が、残る</h3>
-        <p>GPSで歩行を記録し、通った場所がタイルになって自分の色に変わる。通勤の道も、散歩の寄り道も、ぜんぶ盤面に残ります。</p>
-      </article>
-      <article class="feature">
-        <p class="feature-num">02</p>
-        <h3>すれ違う誰かと、奪い合う</h3>
-        <p>同じ街を歩くプレイヤーと陣地を取り合います。電波が届かない場所でも歩行は記録され、つながったときにまとめて反映されます。</p>
-      </article>
-      <article class="feature">
-        <p class="feature-num">03</p>
-        <h3>強さは、歩いた距離だけ</h3>
-        <p>開拓や奪還でコインがたまり、地図の色や称号と交換できます。ただし勝敗を決めるのは歩いた距離だけ。お金で強くなる仕組みは入れていません。</p>
-      </article>
-    </div>
+    <article class="app-card">
+      <a class="app-thumb" href="/apps/territory-walk/" aria-label="TERRITORY WALK の紹介ページを見る">
+        <img src="/assets/territory-walk.jpg" alt="TERRITORY WALK の画面。白黒の地図の上に、歩いて広げた陣地が表示されている。" width="1600" height="827">
+      </a>
+      <div class="app-body">
+        <p class="app-meta">ウォーキング・ゲーム / iOS・Web</p>
+        <h3 class="app-title">TERRITORY WALK</h3>
+        <p class="app-desc">
+          歩いた道が、白黒の地図の上で自分の陣地に変わる。歩けば歩くほど盤面は広がり、
+          同じ街を歩く誰かと陣地を奪い合う。位置情報からつくった、ひとりで歩くためのゲームです。
+        </p>
+        <div class="app-actions">
+          <a class="btn btn--primary" href="/apps/territory-walk/">紹介ページを見る</a>
+          <a class="btn" href="https://shodai4.com/territory-walk/" target="_blank" rel="noopener">ブラウザで遊ぶ</a>
+        </div>
+      </div>
+    </article>
   </section>
 
   <section id="art" class="section section--art">
@@ -129,6 +122,7 @@
       </p>
       <p>
         サーバー代のかからない構成で、自分の手の届く範囲のものを、長く動かし続ける作り方を選んでいます。
+        つくったものは <a href="https://github.com/shodai4" target="_blank" rel="noopener">GitHub</a> に置いています。
       </p>
     </div>
   </section>
@@ -138,7 +132,7 @@
       <h2 class="section-title">つながる</h2>
     </div>
     <ul class="contact-list">
-      <li><a href="https://shodai4.github.io/territory-walk/" target="_blank" rel="noopener"><span>アプリ</span> TERRITORY WALK をひらく</a></li>
+      <li><a href="/apps/territory-walk/"><span>アプリ</span> TERRITORY WALK の紹介</a></li>
       <li><a href="https://github.com/shodai4" target="_blank" rel="noopener"><span>GitHub</span> @shodai4</a></li>
       <li><a href="https://crayonjapan.base.shop/" target="_blank" rel="noopener"><span>ショップ</span> お絵かき楽しも委員会</a></li>
     </ul>
