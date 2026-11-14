@@ -73,8 +73,12 @@ a{color:inherit}
 .site-nav a:hover{color:var(--ink);border-bottom-color:var(--ink)}
 
 @media (max-width:600px){
-  .site-nav{font-size:.72rem;gap:.7rem;letter-spacing:.02em}
-  .brand-text{font-size:.9rem}
+  .site-nav{font-size:.7rem;gap:.7rem;letter-spacing:.01em}
+  .brand-text{display:none}
+}
+
+@media (max-width:380px){
+  .site-nav{font-size:.66rem;gap:.55rem}
 }
 
 /* ---------- hero ---------- */
