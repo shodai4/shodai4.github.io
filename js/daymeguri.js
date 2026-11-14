@@ -43,10 +43,14 @@
     var label = yy + '年' + mm + '月';
 
     if (!id) {
+      var q = encodeURIComponent(label + 'の日めくりカレンダー');
       out.innerHTML =
         '<div class="dm-card dm-card--empty">' +
           '<p class="dm-card-title">' + label + 'のカレンダーは、いま準備中です。</p>' +
           '<p class="dm-card-meta">ほかの年月をえらぶか、<a href="' + D.author.storeUrl + '" target="_blank" rel="noopener">クリエイターページ</a>から探してみてください。</p>' +
+          '<div class="dm-card-actions">' +
+            '<a class="btn" href="https://store.line.me/search/ja?q=' + q + '" target="_blank" rel="noopener">LINE STORE で「' + label + '」を探す</a>' +
+          '</div>' +
         '</div>';
     } else {
       var url = D.productUrlTemplate.replace('{id}', id);
