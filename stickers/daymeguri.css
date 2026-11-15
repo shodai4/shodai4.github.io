@@ -906,6 +906,7 @@ p { margin: 0; }
 }
 .desk-intro-photo {
   position: relative;
+  width: 100%;
   aspect-ratio: 3 / 2;
   background: var(--cream-deep);
   overflow: hidden;
@@ -1140,7 +1141,6 @@ p { margin: 0; }
   .rank-list { grid-template-columns: minmax(0, 1fr); }
   .rank-item { max-width: 26rem; margin: 0 auto; width: 100%; }
   .rank-photo { width: min(58%, 11rem); }
-  .desk-intro { grid-template-columns: minmax(0, 1fr); }
   .desk-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .notes-grid { grid-template-columns: minmax(0, 1fr); }
 }
@@ -1193,6 +1193,8 @@ p { margin: 0; }
   .dm-card-thumb { width: 118px; }
   .search-actions .btn { flex: 1 1 100%; }
   .desk-cta .btn { flex: 1 1 100%; }
+  .desk-intro { grid-template-columns: minmax(0, 1fr); }
+  .desk-intro-photo { max-height: 21rem; }
   .footer-inner { grid-template-columns: minmax(0, 1fr); }
   .footer-nav { font-size: .7rem; gap: .35rem 1rem; }
 }
