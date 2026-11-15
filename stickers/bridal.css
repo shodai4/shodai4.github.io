@@ -440,10 +440,10 @@ p { margin: 0; }
 }
 .dm-field { display: flex; flex-direction: column; gap: .35rem; min-width: 0; }
 .dm-field label {
-  font-family: var(--serif-en);
+  font-family: var(--serif);
   font-size: .76rem;
-  font-style: italic;
-  letter-spacing: .16em;
+  font-style: normal;
+  letter-spacing: .22em;
   color: var(--gold-ink);
 }
 .select-wrap { position: relative; display: block; }
@@ -554,11 +554,11 @@ p { margin: 0; }
 .dm-card-meta a { color: var(--gold-ink); }
 .dm-url-label {
   margin: 0 0 .2rem;
-  font-family: var(--serif-en);
-  font-size: .66rem;
-  font-style: italic;
-  letter-spacing: .18em;
-  color: var(--gold-ink);
+  font-family: var(--serif);
+  font-size: .7rem;
+  font-style: normal;
+  letter-spacing: .16em;
+  color: var(--ink-mute);
 }
 .dm-url {
   margin: 0 0 1rem;
