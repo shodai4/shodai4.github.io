@@ -698,6 +698,7 @@ p { margin: 0; }
   font-size: .83rem;
   line-height: 2;
   color: var(--ink-soft);
+  text-wrap: pretty;
 }
 .fair-tag {
   display: inline-block;
@@ -886,6 +887,7 @@ p { margin: 0; }
   font-size: .8rem;
   line-height: 2;
   color: var(--ink-soft);
+  text-wrap: pretty;
 }
 
 .desk-voice {
