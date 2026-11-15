@@ -95,66 +95,19 @@
       <p class="section-note">LINEスタンプ ／ 1900年1月〜2100年12月・2,357種類</p>
     </div>
 
-    <p class="dm-lead">
-      生まれた月の、日めくり。<br>
-      「〇〇年〇月の日めくりカレンダーです。」というLINEスタンプを、1900年1月から2100年12月まで、月ごとにひとつずつ描いてきました。
-      全2,412か月のうち<strong>2,357種類</strong>。自分の誕生月も、推しが生まれた月も、結婚した月も、子どもが生まれた月も、たいていここにあります。
-    </p>
-
-    <ul class="dm-uses">
-      <li><span class="dm-use-tag">誕生日</span>生まれた月のカレンダーを、毎日ひらく。</li>
-      <li><span class="dm-use-tag">推し</span>推しが生まれた月、デビューした月。</li>
-      <li><span class="dm-use-tag">記念日</span>結婚、出産、はじめた日。</li>
-      <li><span class="dm-use-tag">今月</span>毎月1日に差しかえて、今日の日付を。</li>
-    </ul>
-
-    <div class="dm-picker">
-      <h3 class="dm-picker-title">年月をえらんで、スタンプをひらく</h3>
-      <form class="dm-form" id="dm-form" action="#stickers">
-        <div class="dm-field">
-          <label for="dm-year">年</label>
-          <select id="dm-year" name="year" autocomplete="off"></select>
+    <article class="app-card app-card--text">
+      <div class="app-body">
+        <p class="app-meta">LINEスタンプ</p>
+        <h3 class="app-title">日めくりカレンダー 1900–2100</h3>
+        <p class="app-desc">
+          「〇〇年〇月の日めくりカレンダーです。」を、1900年1月から2100年12月まで月ごとに。
+          全2,412か月のうち2,357種類を描きました。生まれた月も、推しの月も、たいていここにあります。
+        </p>
+        <div class="app-actions">
+          <a class="btn btn--primary" href="/stickers/">日めくりカレンダーを見る</a>
         </div>
-        <div class="dm-field">
-          <label for="dm-month">月</label>
-          <select id="dm-month" name="month" autocomplete="off"></select>
-        </div>
-        <div class="dm-form-actions">
-          <button class="btn btn--primary" type="submit">この年月のスタンプを見る</button>
-          <button class="btn" type="button" id="dm-now">今月のスタンプ</button>
-        </div>
-      </form>
-
-      <div class="dm-result" id="dm-result" aria-live="polite"></div>
-      <noscript>
-        <p class="dm-fallback">年月をえらんで開くには JavaScript が必要です。下のクリエイターページからも、すべてのスタンプを探せます。</p>
-      </noscript>
-    </div>
-
-    <div class="dm-gallery">
-      <figure class="dm-sample">
-        <img src="/assets/daymeguri-1900-01.png" alt="1900年1月の日めくりカレンダーの見本。赤い数字の1と、日曜日の表示。" width="240" height="240" loading="lazy">
-        <figcaption>1900年1月</figcaption>
-      </figure>
-      <figure class="dm-sample">
-        <img src="/assets/daymeguri-2000-01.png" alt="2000年1月の日めくりカレンダーの見本。" width="240" height="240" loading="lazy">
-        <figcaption>2000年1月</figcaption>
-      </figure>
-      <figure class="dm-sample">
-        <img src="/assets/daymeguri-2026-11.png" alt="2026年11月の日めくりカレンダーの見本。" width="240" height="240" loading="lazy">
-        <figcaption>2026年11月（今月）</figcaption>
-      </figure>
-    </div>
-
-    <div class="dm-actions">
-      <a class="btn btn--primary" href="https://store.line.me/stickershop/author/20746/ja" target="_blank" rel="noopener">クリエイターページで全部見る</a>
-      <a class="btn" href="https://store.line.me/stickershop/product/26515246/ja" target="_blank" rel="noopener">今月（2026年11月）のスタンプ</a>
-    </div>
-
-    <p class="dm-note">
-      スタンプは1セット ¥190〜、LINEスタンプ プレミアムの対象です。販売状況・価格は時期によって変わるため、最終的には LINE STORE の表示が優先です。
-      2044年3月〜2048年2月と一部の月は、いま準備中です。
-    </p>
+      </div>
+    </article>
   </section>
 
   <section id="art" class="section section--art">
@@ -204,7 +157,7 @@
       <li><a href="/apps/territory-walk/"><span>アプリ</span> TERRITORY WALK の紹介</a></li>
       <li><a href="https://github.com/shodai4" target="_blank" rel="noopener"><span>GitHub</span> @shodai4</a></li>
       <li><a href="https://crayonjapan.base.shop/" target="_blank" rel="noopener"><span>ショップ</span> お絵かき楽しも委員会</a></li>
-      <li><a href="#stickers"><span>スタンプ</span> 日めくりカレンダー 1900–2100</a></li>
+      <li><a href="/stickers/"><span>スタンプ</span> 日めくりカレンダー 1900–2100</a></li>
     </ul>
   </section>
 </main>
@@ -213,7 +166,5 @@
   <p class="footer-credit">Created with ♡ for お絵描き楽しも委員会（しょうだい）</p>
   <p class="footer-copy">© 2026 shodai4 / しょうだい</p>
 </footer>
-<script src="/data/calendar.js?v=20261115" defer></script>
-<script src="/js/daymeguri.js?v=20261115" defer></script>
 </body>
 </html>

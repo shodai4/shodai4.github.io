@@ -278,6 +278,10 @@ a{color:inherit}
   .app-actions .btn{flex:1 1 auto}
 }
 
+/* 画像を持たない紹介カード（日めくりカレンダーなど） */
+.app-card--text{grid-template-columns:minmax(0,1fr);padding:clamp(1.2rem,3vw,1.7rem)}
+.app-card--text .app-desc{max-width:46em}
+
 /* ---------- art ---------- */
 
 .section--art{background:linear-gradient(180deg,rgba(236,231,221,.5),rgba(236,231,221,0))}
@@ -441,6 +445,7 @@ a{color:inherit}
   margin:clamp(1.6rem,3.4vw,2.2rem) 0 0;
   max-width:30rem;
 }
+.section .dm-gallery{margin-top:0}
 .dm-sample{margin:0}
 .dm-sample img{border:1px solid var(--line);border-radius:12px;background:#fff;width:100%}
 .dm-sample figcaption{margin-top:.5rem;font-size:.72rem;letter-spacing:.08em;color:var(--ink-mute);text-align:center}
