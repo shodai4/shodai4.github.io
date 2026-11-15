@@ -282,6 +282,7 @@ a{color:inherit}
 .app-card--text{grid-template-columns:minmax(0,1fr);padding:clamp(1.2rem,3vw,1.7rem)}
 .app-card--text .app-desc{max-width:46em}
 .nowrap{white-space:nowrap}
+.jp{word-break:keep-all}
 
 /* ---------- art ---------- */
 

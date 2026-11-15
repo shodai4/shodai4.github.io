@@ -151,6 +151,24 @@ p { margin: 0; }
 
 .nowrap { white-space: nowrap; }
 
+/* 文節の途中で折り返さない（Safari でも語の途中で切れないよう keep-all ＋ <wbr>） */
+.hero-lead,
+.search-note,
+.search-hint,
+.section-note,
+.section-fine,
+.lineup-text,
+.rank-copy,
+.desk-text,
+.desk-voice p,
+.notes-list li,
+.maker-text,
+.footer-credit p { word-break: keep-all; }
+
+/* スマホ幅のときだけ改行する br */
+.sp-br { display: none; }
+@media (max-width: 700px) { .sp-br { display: inline; } }
+
 .text-link {
   color: var(--gold-ink);
   text-decoration: none;
@@ -282,14 +300,25 @@ p { margin: 0; }
 }
 
 .hero-eyebrow {
-  font-family: var(--serif-en);
-  font-size: clamp(.72rem, 1.4vw, .86rem);
-  font-style: italic;
-  letter-spacing: .3em;
-  color: var(--gold-ink);
-  margin-bottom: 1.5rem;
+  font-family: var(--serif);
+  font-size: clamp(.78rem, 1.6vw, .92rem);
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: .08em;
+  color: #7a5f2c;
+  margin-bottom: 1.35rem;
 }
-.hero-eyebrow span { letter-spacing: .22em; color: var(--champagne); }
+.hero-eyebrow b {
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--rose-deep);
+}
+.hero-eyebrow span {
+  font-family: var(--serif-en);
+  font-style: normal;
+  letter-spacing: .1em;
+  color: #8a6a2a;
+}
 
 .hero-title {
   margin: 0;
@@ -544,7 +573,7 @@ p { margin: 0; }
   font-size: clamp(1.05rem, 2.4vw, 1.28rem);
   letter-spacing: .06em;
   line-height: 1.6;
-  word-break: auto-phrase;
+  word-break: keep-all;
 }
 .dm-card-meta {
   margin: 0 0 1rem;
@@ -552,6 +581,7 @@ p { margin: 0; }
   letter-spacing: .03em;
   color: var(--ink-mute);
   line-height: 1.85;
+  word-break: keep-all;
 }
 .dm-card-meta a { color: var(--gold-ink); }
 .dm-url-label {
@@ -577,7 +607,7 @@ p { margin: 0; }
 .dm-card-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
 .dm-card-actions .btn { font-size: .78rem; padding: .65em 1.3em; min-height: 2.7em; }
 
-.dm-fallback { font-size: .8rem; color: var(--ink-soft); }
+.dm-fallback { font-size: .8rem; color: var(--ink-soft); word-break: keep-all; }
 
 .search-actions {
   display: flex;
@@ -904,15 +934,7 @@ p { margin: 0; }
   line-height: 2;
   letter-spacing: .06em;
   color: var(--ink);
-  word-break: auto-phrase;
-}
-.desk-voice cite {
-  display: block;
-  margin-top: .8rem;
-  font-size: .7rem;
-  font-style: normal;
-  letter-spacing: .1em;
-  color: var(--ink-mute);
+  word-break: keep-all;
 }
 .desk-cta {
   display: flex;
@@ -1066,7 +1088,7 @@ p { margin: 0; }
       radial-gradient(90% 70% at 50% 30%, rgba(255, 253, 249, .55), rgba(255, 253, 249, 0) 70%);
   }
   .hero-title { font-size: clamp(1.95rem, 9.2vw, 2.7rem); line-height: 1.4; }
-  .hero-eyebrow { color: #7d5f24; text-shadow: 0 0 10px rgba(255, 253, 249, .95), 0 0 3px rgba(255, 253, 249, 1); }
+  .hero-eyebrow { font-size: .78rem; letter-spacing: .02em; color: #6f5527; text-shadow: 0 0 10px rgba(255, 253, 249, .95), 0 0 3px rgba(255, 253, 249, 1); }
   .hero-lead { font-size: .85rem; }
   .hero-facts { gap: .35rem 1.3rem; }
   .hero-facts b { font-size: 1.2rem; }

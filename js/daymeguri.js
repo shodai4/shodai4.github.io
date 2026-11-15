@@ -46,7 +46,7 @@
       var q = encodeURIComponent(label + 'の日めくりカレンダー');
       out.innerHTML =
         '<div class="dm-card dm-card--empty">' +
-          '<p class="dm-card-title">' + label + 'のカレンダーを、LINE STORE でどうぞ。</p>' +
+          '<p class="dm-card-title">' + label + 'のカレンダーを、<wbr>LINE STORE でどうぞ。</p>' +
           '<p class="dm-card-meta">下のボタンから LINE STORE で「' + label + '」を探せます。クリエイターのページからも、すべてのスタンプをご覧いただけます。</p>' +
           '<div class="dm-card-actions">' +
             '<a class="btn" href="https://store.line.me/search/ja?q=' + q + '" target="_blank" rel="noopener">LINE STORE で「' + label + '」を見る</a>' +
@@ -62,7 +62,7 @@
             '<img src="' + img + '" alt="' + label + 'の日めくりカレンダーの見本" width="240" height="240" loading="lazy">' +
           '</div>' +
           '<div class="dm-card-body">' +
-            '<p class="dm-card-title">' + label + 'の日めくりカレンダーです。</p>' +
+            '<p class="dm-card-title">' + label + 'の<wbr>日めくりカレンダーです。</p>' +
             '<p class="dm-card-meta">LINEスタンプ ／ 1セット ¥190〜 ／ LINEスタンプ プレミアム対象</p>' +
             '<p class="dm-url-label">このスタンプのURL</p>' +
             '<p class="dm-url"><a href="' + url + '" target="_blank" rel="noopener">' + url + '</a></p>' +
