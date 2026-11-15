@@ -46,10 +46,11 @@
       var q = encodeURIComponent(label + 'の日めくりカレンダー');
       out.innerHTML =
         '<div class="dm-card dm-card--empty">' +
-          '<p class="dm-card-title">' + label + 'のカレンダーは、いま準備中です。</p>' +
-          '<p class="dm-card-meta">ほかの年月をえらぶか、<a href="' + D.author.storeUrl + '" target="_blank" rel="noopener">クリエイターページ</a>から探してみてください。</p>' +
+          '<p class="dm-card-title">' + label + 'のカレンダーを、LINE STORE でどうぞ。</p>' +
+          '<p class="dm-card-meta">下のボタンから LINE STORE で「' + label + '」を探せます。クリエイターのページからも、すべてのスタンプをご覧いただけます。</p>' +
           '<div class="dm-card-actions">' +
-            '<a class="btn" href="https://store.line.me/search/ja?q=' + q + '" target="_blank" rel="noopener">LINE STORE で「' + label + '」を探す</a>' +
+            '<a class="btn" href="https://store.line.me/search/ja?q=' + q + '" target="_blank" rel="noopener">LINE STORE で「' + label + '」を見る</a>' +
+            '<a class="btn" href="' + D.author.storeUrl + '" target="_blank" rel="noopener">クリエイターのページへ</a>' +
           '</div>' +
         '</div>';
     } else {

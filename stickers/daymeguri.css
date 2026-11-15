@@ -1,6 +1,6 @@
 /* ==========================================================================
-   日めくりウェディング — stickers/index.html 専用スタイル
-   ブライダル式場サイト（ハナユメ風パロディ）のトーン＆マナー
+   日めくりカレンダー 1900–2100 — stickers/index.html 専用スタイル
+   アイボリー×シャンパンゴールド×ローズの、華やかで上品なトーン＆マナー
    ========================================================================== */
 
 :root {
@@ -192,9 +192,9 @@ p { margin: 0; }
   color: var(--ink);
   min-width: 0;
 }
-.brand-rings {
-  width: 40px;
-  height: 27px;
+.brand-cal {
+  width: 28px;
+  height: 28px;
   flex: none;
   color: var(--champagne);
 }
@@ -647,15 +647,15 @@ p { margin: 0; }
   text-align: center;
 }
 
-/* ---------- fair ---------- */
+/* ---------- lineup ---------- */
 
-.fair { position: relative; }
-.fair-grid {
+.lineup { position: relative; }
+.lineup-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1rem, 2.6vw, 1.6rem);
 }
-.fair-card {
+.lineup-card {
   position: relative;
   padding: clamp(1.5rem, 3.4vw, 2.1rem) clamp(1.3rem, 3vw, 1.9rem);
   background: var(--ivory);
@@ -664,7 +664,7 @@ p { margin: 0; }
   box-shadow: var(--shadow-card);
   transition: border-color .25s, transform .25s, box-shadow .25s;
 }
-.fair-card::before {
+.lineup-card::before {
   content: "";
   position: absolute;
   left: 0; top: 0;
@@ -673,19 +673,19 @@ p { margin: 0; }
   background: linear-gradient(90deg, var(--gold-soft), var(--champagne), var(--gold-soft));
   border-radius: var(--radius) var(--radius) 0 0;
 }
-.fair-card:hover {
+.lineup-card:hover {
   border-color: var(--gold-soft);
   transform: translateY(-2px);
   box-shadow: 0 22px 46px -36px rgba(120, 92, 48, .8);
 }
-.fair-num {
+.lineup-num {
   font-family: var(--serif-en);
   font-size: 1.05rem;
   letter-spacing: .18em;
   color: var(--champagne);
   margin-bottom: .6rem;
 }
-.fair-title {
+.lineup-title {
   margin: 0 0 .7rem;
   font-family: var(--serif);
   font-weight: 600;
@@ -694,13 +694,13 @@ p { margin: 0; }
   letter-spacing: .05em;
   word-break: auto-phrase;
 }
-.fair-text {
+.lineup-text {
   font-size: .83rem;
   line-height: 2;
   color: var(--ink-soft);
   text-wrap: pretty;
 }
-.fair-tag {
+.lineup-tag {
   display: inline-block;
   margin-top: 1.1rem;
   padding: .3em 1em;
@@ -712,7 +712,7 @@ p { margin: 0; }
 }
 
 /* ミントのアクセント帯 */
-.fair::before {
+.lineup::before {
   content: "";
   position: absolute;
   left: 50%;
@@ -1027,7 +1027,7 @@ p { margin: 0; }
 
 @media (max-width: 900px) {
   .hero-inner { padding-left: 0; }
-  .fair-grid { grid-template-columns: minmax(0, 1fr); }
+  .lineup-grid { grid-template-columns: minmax(0, 1fr); }
   .rank-list { grid-template-columns: minmax(0, 1fr); }
   .rank-item { max-width: 26rem; margin: 0 auto; width: 100%; }
   .rank-photo { width: min(58%, 11rem); }
@@ -1048,7 +1048,7 @@ p { margin: 0; }
     font-size: .74rem;
   }
   .site-nav::-webkit-scrollbar { display: none; }
-  .brand-rings { width: 34px; height: 23px; }
+  .brand-cal { width: 24px; height: 24px; }
   .brand-name { font-size: .95rem; letter-spacing: .06em; }
   .brand-sub { font-size: .54rem; letter-spacing: .14em; }
 }
