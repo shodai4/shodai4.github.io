@@ -446,7 +446,7 @@ a{color:inherit}
   margin:clamp(1.6rem,3.4vw,2.2rem) 0 0;
   max-width:30rem;
 }
-.section .dm-gallery{margin-top:0}
+.section .dm-gallery{margin-top:0;max-width:44rem}
 .dm-sample{margin:0}
 .dm-sample img{border:1px solid var(--line);border-radius:12px;background:#fff;width:100%}
 .dm-sample figcaption{margin-top:.5rem;font-size:.72rem;letter-spacing:.08em;color:var(--ink-mute);text-align:center}
