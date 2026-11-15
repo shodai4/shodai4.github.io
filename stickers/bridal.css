@@ -248,7 +248,7 @@ p { margin: 0; }
   display: flex;
   align-items: center;
   min-height: clamp(30rem, 74vh, 42rem);
-  padding: clamp(2.6rem, 7vw, 5rem) clamp(1.2rem, 4vw, 3rem) clamp(8.5rem, 13vw, 10.5rem);
+  padding: clamp(2.4rem, 6vw, 4.4rem) clamp(1.2rem, 4vw, 3rem) clamp(7.5rem, 11vw, 9.5rem);
   overflow: hidden;
   background: var(--ivory);
 }
@@ -293,8 +293,8 @@ p { margin: 0; }
   margin: 0;
   font-family: var(--serif);
   font-weight: 600;
-  font-size: clamp(2.3rem, 7.6vw, 4.4rem);
-  line-height: 1.32;
+  font-size: clamp(2.3rem, 7.2vw, 4.1rem);
+  line-height: 1.3;
   letter-spacing: .06em;
   color: #3a3129;
 }
@@ -308,7 +308,7 @@ p { margin: 0; }
 }
 
 .hero-lead {
-  margin-top: 1.3rem;
+  margin-top: 1.15rem;
   max-width: 34em;
   font-size: clamp(.86rem, 1.7vw, .98rem);
   line-height: 2.15;
@@ -817,7 +817,9 @@ p { margin: 0; }
   font-size: .8rem;
   line-height: 1.95;
   color: var(--ink-soft);
-  text-align: left;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 30em;
 }
 .rank-meta {
   margin-top: .9rem;
@@ -1057,8 +1059,8 @@ p { margin: 0; }
   .hero-media img { object-position: center top; }
   .hero-veil {
     background:
-      linear-gradient(180deg, rgba(255, 253, 249, .82) 0%, rgba(255, 253, 249, .86) 46%, rgba(255, 253, 249, .96) 100%),
-      radial-gradient(90% 70% at 50% 30%, rgba(255, 253, 249, .6), rgba(255, 253, 249, 0) 70%);
+      linear-gradient(180deg, rgba(255, 253, 249, .58) 0%, rgba(255, 253, 249, .72) 42%, rgba(255, 253, 249, .92) 100%),
+      radial-gradient(90% 70% at 50% 30%, rgba(255, 253, 249, .55), rgba(255, 253, 249, 0) 70%);
   }
   .hero-title { font-size: clamp(1.95rem, 9.2vw, 2.7rem); line-height: 1.4; }
   .hero-lead { font-size: .85rem; }
@@ -1079,6 +1081,12 @@ p { margin: 0; }
   .desk-cta .btn { flex: 1 1 100%; }
   .footer-inner { grid-template-columns: minmax(0, 1fr); }
   .footer-nav { font-size: .7rem; gap: .35rem 1rem; }
+}
+
+@media (max-width: 560px) {
+  .site-nav { font-size: .76rem; gap: .9rem; }
+  .site-nav a:nth-child(4),
+  .site-nav .nav-cta { display: none; }
 }
 
 @media (max-width: 420px) {
