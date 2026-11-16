@@ -15,7 +15,7 @@
 
 *{box-sizing:border-box}
 
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-anchor:none}
 
 body{
   margin:0;
@@ -286,7 +286,7 @@ a{color:inherit}
 .jp{word-break:keep-all}
 
 /* つくったもの：増えた分は折りたたんでおく */
-.app-list{display:grid;gap:clamp(1rem,2.6vw,1.6rem);overflow-anchor:none}
+.app-list{display:grid;gap:clamp(1rem,2.6vw,1.6rem)}
 .js .app-list.is-collapsed .app-card--extra{display:none}
 
 .app-more{display:flex;justify-content:center;margin-top:clamp(1.3rem,3vw,2rem)}
