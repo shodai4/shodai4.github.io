@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>嘘電卓 — 答えが嘘すぎる電卓</title>
+<meta name="description" content="押すと嘘の答えが出る電卓。おまかせ／ポジティブ／数字だけ嘘の3モード。友達に渡すドッキリにも。">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%AE%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="app" id="app">
+
+  <header class="bar">
+    <h1 class="title">嘘電卓</h1>
+    <div class="modes" role="group" aria-label="モード切替">
+      <button type="button" class="chip is-on" data-mode="auto" aria-pressed="true">おまかせ</button>
+      <button type="button" class="chip" data-mode="positive" aria-pressed="false">ポジティブ</button>
+      <button type="button" class="chip" data-mode="numbers" aria-pressed="false">数字だけ嘘</button>
+    </div>
+  </header>
+
+  <section class="screen" id="screen" aria-live="polite" aria-atomic="true">
+    <div class="expr" id="expr"></div>
+    <div class="result-wrap">
+      <div class="result" id="result">0</div>
+    </div>
+    <div class="share" id="share" hidden>
+      <button type="button" class="share-btn" id="copyBtn">コピー</button>
+      <a class="share-btn" id="tweetBtn" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener">Xでポスト</a>
+    </div>
+  </section>
+
+  <section class="keys" id="keys" aria-label="キーパッド">
+    <button type="button" class="key fn" data-key="AC">AC</button>
+    <button type="button" class="key fn" data-key="⌫" aria-label="1文字消す">⌫</button>
+    <button type="button" class="key fn" data-key="%" aria-label="パーセント">%</button>
+    <button type="button" class="key op" data-key="÷" aria-label="割る">÷</button>
+
+    <button type="button" class="key num" data-key="7">7</button>
+    <button type="button" class="key num" data-key="8">8</button>
+    <button type="button" class="key num" data-key="9">9</button>
+    <button type="button" class="key op" data-key="×" aria-label="かける">×</button>
+
+    <button type="button" class="key num" data-key="4">4</button>
+    <button type="button" class="key num" data-key="5">5</button>
+    <button type="button" class="key num" data-key="6">6</button>
+    <button type="button" class="key op" data-key="−" aria-label="引く">−</button>
+
+    <button type="button" class="key num" data-key="1">1</button>
+    <button type="button" class="key num" data-key="2">2</button>
+    <button type="button" class="key num" data-key="3">3</button>
+    <button type="button" class="key op" data-key="+" aria-label="足す">+</button>
+
+    <button type="button" class="key fn" data-key="+/-" aria-label="プラスマイナス">+/−</button>
+    <button type="button" class="key num" data-key="0">0</button>
+    <button type="button" class="key num" data-key="." aria-label="小数点">.</button>
+    <button type="button" class="key op" data-key="=" aria-label="イコール">=</button>
+  </section>
+
+  <footer class="credit">Created with for お絵描き楽しも委員会（しょうだい）</footer>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
