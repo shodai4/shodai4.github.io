@@ -7,6 +7,7 @@
 <meta name="description" content="大阪でWebアプリと絵をつくる、しょうだい（shodai4）の制作の置き場。歩いた道が陣地になるウォーキング・ゲーム「TERRITORY WALK」、油絵・ZINEの活動、1900年〜2100年の月別LINEスタンプ「日めくりカレンダー」（月齢・祝日・記念日付き）をまとめています。">
 <link rel="canonical" href="https://shodai4.com/">
 <meta name="theme-color" content="#f4f1ea">
+<script>document.documentElement.classList.add('js');</script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="shodai4.com">
 <meta property="og:title" content="shodai4 — つくったものと、描いたもの。">
@@ -68,22 +69,109 @@
       <p class="section-note">自分で使い続けたいものだけをつくっています。</p>
     </div>
 
-    <article class="app-card">
-      <a class="app-thumb" href="/apps/territory-walk/" aria-label="TERRITORY WALK の紹介ページを見る">
-        <img src="/assets/territory-walk.jpg" alt="TERRITORY WALK の画面。白黒の地図の上に、歩いて広げた陣地が表示されている。" width="1600" height="827">
-      </a>
-      <div class="app-body">
-        <p class="app-meta">ウォーキング・ゲーム / iOS・Web</p>
-        <h3 class="app-title">TERRITORY WALK</h3>
-        <p class="app-desc jp">
-          歩いた道が、<wbr>白黒の地図の上で<wbr>自分の陣地に変わる。歩けば歩くほど<wbr>盤面は広がり、<wbr>同じ街を歩く誰かと<wbr>陣地を奪い合う。位置情報からつくった、<wbr>ひとりで歩くためのゲームです。
-        </p>
-        <div class="app-actions">
-          <a class="btn btn--primary" href="/apps/territory-walk/">紹介ページを見る</a>
-          <a class="btn" href="https://shodai4.com/territory-walk/" target="_blank" rel="noopener">ブラウザで遊ぶ</a>
+    <div class="app-list is-collapsed" id="app-list">
+      <article class="app-card">
+        <a class="app-thumb" href="/apps/territory-walk/" aria-label="TERRITORY WALK の紹介ページを見る">
+          <img src="/assets/territory-walk.jpg" alt="TERRITORY WALK の画面。白黒の地図の上に、歩いて広げた陣地が表示されている。" width="1600" height="827">
+        </a>
+        <div class="app-body">
+          <p class="app-meta">ウォーキング・ゲーム / iOS・Web</p>
+          <h3 class="app-title">TERRITORY WALK</h3>
+          <p class="app-desc jp">
+            歩いた道が、<wbr>白黒の地図の上で<wbr>自分の陣地に変わる。歩けば歩くほど<wbr>盤面は広がり、<wbr>同じ街を歩く誰かと<wbr>陣地を奪い合う。位置情報からつくった、<wbr>ひとりで歩くためのゲームです。
+          </p>
+          <div class="app-actions">
+            <a class="btn btn--primary" href="/apps/territory-walk/">紹介ページを見る</a>
+            <a class="btn" href="https://shodai4.com/territory-walk/" target="_blank" rel="noopener">ブラウザで遊ぶ</a>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
+
+      <article class="app-card app-card--text">
+        <div class="app-body">
+          <p class="app-meta">画材 / Web</p>
+          <h3 class="app-title">画材ガチャ</h3>
+          <p class="app-desc jp">
+            笹部洋画材料店の<wbr>全商品から、<wbr>予算内に収まる<wbr>画材をくじで引きます。単品狙い・<wbr>ちょうど3点・<wbr>詰め合わせの<wbr>3モード。出た画材は<wbr>そのまま<wbr>笹部画材のカートへ。
+          </p>
+          <div class="app-actions">
+            <a class="btn btn--primary" href="/sasabe-gacha/">ガチャを回す</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="app-card app-card--text">
+        <div class="app-body">
+          <p class="app-meta">画材の在庫管理 / Web</p>
+          <h3 class="app-title">ガザイコ</h3>
+          <p class="app-desc jp">
+            家・アトリエ・<wbr>持ち出し・ストックの<wbr>フォルダに、<wbr>画材をしまっていく<wbr>在庫アプリ。JANバーコードを<wbr>読んで<wbr>登録できます。
+          </p>
+          <div class="app-actions">
+            <a class="btn" href="/art-supply-manager/">アプリを開く</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="app-card app-card--text app-card--extra">
+        <div class="app-body">
+          <p class="app-meta">デートプラン / Web</p>
+          <h3 class="app-title">理想のデートを<span class="nowrap">15文字でどうぞ。</span></h3>
+          <p class="app-desc jp">
+            15文字で書いた<wbr>デートプランを<wbr>みんなで投稿して、<wbr>投票して、<wbr>ルーレットで<wbr>決める。
+          </p>
+          <div class="app-actions">
+            <a class="btn" href="/date-15/">見てみる</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="app-card app-card--text app-card--extra">
+        <div class="app-body">
+          <p class="app-meta">ゲーム / Web</p>
+          <h3 class="app-title">サザエさんとじゃんけん</h3>
+          <p class="app-desc jp">
+            サザエさんと<wbr>じゃんけんする、<wbr>レトロな画面の<wbr>ゲーム。
+          </p>
+          <div class="app-actions">
+            <a class="btn" href="/sazae-janken/">遊ぶ</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="app-card app-card--text app-card--extra">
+        <div class="app-body">
+          <p class="app-meta">ゲーム / Web</p>
+          <h3 class="app-title">時差じゃんけん</h3>
+          <p class="app-desc jp">
+            出した手が<wbr>未来の誰かの<wbr>対戦相手になり、<wbr>自分は過去の誰かが<wbr>残した手と<wbr>勝負します。
+          </p>
+          <div class="app-actions">
+            <a class="btn" href="/time-lag-janken/">遊ぶ</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="app-card app-card--text app-card--extra">
+        <div class="app-body">
+          <p class="app-meta">おもちゃ / Web</p>
+          <h3 class="app-title">嘘電卓</h3>
+          <p class="app-desc jp">
+            押すと<wbr>嘘の答えが出る<wbr>電卓。おまかせ・<wbr>ポジティブ・<wbr>数字だけ嘘の<wbr>3モード。
+          </p>
+          <div class="app-actions">
+            <a class="btn" href="/uso-dentaku/">押してみる</a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="app-more" id="app-more" hidden>
+      <button class="btn app-more-btn" type="button" id="app-more-btn" aria-expanded="false" aria-controls="app-list">
+        <span class="app-more-label">もっと見る</span>
+        <span class="app-more-icon" aria-hidden="true">▾</span>
+      </button>
+    </div>
   </section>
 
   <section id="stickers" class="section section--stickers">
@@ -160,5 +248,6 @@
   <p class="footer-credit">Created with ♡ for お絵描き楽しも委員会（しょうだい）</p>
   <p class="footer-copy">© 2026 shodai4 / しょうだい</p>
 </footer>
+<script src="/js/apps-list.js" defer></script>
 </body>
 </html>

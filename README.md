@@ -1,8 +1,9 @@
 # shodai4.com — ポートフォリオ
 
-`shodai4.com` で公開する個人サイト（静的HTML/CSSのみ・ビルド不要）。
-トップは「しょうだい（shodai4）の制作の置き場」で、前面に出すアプリは iOS / Web の **TERRITORY WALK** 1本、
-絵の活動（アトリエ三月 年末展2026・ZINE・BASEショップ）を並べている。
+`shodai4.com` で公開する個人サイト（静的HTML/CSS/JSのみ・ビルド不要）。
+トップは「しょうだい（shodai4）の制作の置き場」で、前面に出すアプリは iOS / Web の **TERRITORY WALK** 1本。
+その下の「つくったもの」には他のツールも並べ、代表3本だけ見せて残りは「もっと見る（全7件）」で開く。
+絵の活動（アトリエ三月 年末展2026・ZINE・BASEショップ）も並べている。
 
 ## 中身
 
@@ -10,7 +11,8 @@
 | --- | --- |
 | `index.html` | トップページ（つくったもの／描いたもの／つくる人／つながる） |
 | `apps/territory-walk/index.html` | TERRITORY WALK 専用の紹介ページ（`/apps/territory-walk/`） |
-| `styles.css` | 全スタイル（外部フォント・外部JSなし） |
+| `styles.css` | 全スタイル（外部フォント・CDNなし） |
+| `js/apps-list.js` | トップの「つくったもの」の開閉（代表3本＋「もっと見る」） |
 | `404.html` | 404ページ |
 | `CNAME` | `shodai4.com`（GitHub Pages のカスタムドメイン） |
 | `app-ads.txt` | AdMob 用（`pub-5739782559889389`）。`shodai4/territory-walk` の同ファイルと同一内容 |
@@ -40,6 +42,15 @@
 - CNAME `www` → `shodai4.github.io`
 - ネームサーバー: `NS1-3.XDOMAIN.NE.JP`（XServer Domain のDNSを使う設定）
 
+## トップの「つくったもの」
+
+- 並べる7本: TERRITORY WALK／画材ガチャ（`/sasabe-gacha/`）／ガザイコ（`/art-supply-manager/`）／デート15文字（`/date-15/`）／
+  サザエさんとじゃんけん（`/sazae-janken/`）／時差じゃんけん（`/time-lag-janken/`）／嘘電卓（`/uso-dentaku/`）
+- `#app-list` の中の `app-card--extra` が折りたたみ分。1本目〜3本目は常時表示。
+- JSが読めない環境では全件そのまま表示し、ボタンは出ない（`.js` クラスで切り替え）。
+- ツールを増やすときは `app-card--text` のカードを1枚足し、`app-card--extra` を付ける。
+  「全○件」の数はJSが数えるので書き換え不要。
+
 ## 未対応（あとで）
 
-- 作品・アプリが増えたらトップの「つくったもの」に追加する（他6本は当面出さない方針）
+- FogWalker（`/fog-walker/`）は休止中のため一覧から外している。再開したらカードを1枚足す。

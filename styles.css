@@ -267,6 +267,7 @@ a{color:inherit}
   margin:0 0 .8rem;
   font-family:var(--serif);font-weight:600;
   font-size:clamp(1.3rem,3vw,1.7rem);letter-spacing:.06em;
+  word-break:auto-phrase;
 }
 .app-desc{margin:0;font-size:.85rem;line-height:2;color:var(--ink-soft)}
 
@@ -283,6 +284,22 @@ a{color:inherit}
 .app-card--text .app-desc{max-width:46em}
 .nowrap{white-space:nowrap}
 .jp{word-break:keep-all}
+
+/* つくったもの：増えた分は折りたたんでおく */
+.app-list{display:grid;gap:clamp(1rem,2.6vw,1.6rem)}
+.js .app-list.is-collapsed .app-card--extra{display:none}
+
+.app-more{display:flex;justify-content:center;margin-top:clamp(1.3rem,3vw,2rem);scroll-margin-top:5.5rem}
+.app-more[hidden]{display:none}
+.app-more .btn{
+  font:inherit;font-size:.8rem;letter-spacing:.12em;
+  background:transparent;color:var(--ink);
+  gap:.6em;cursor:pointer;
+}
+.app-more .btn:hover{background:var(--ink);color:var(--paper)}
+.app-more-icon{font-size:1em;line-height:1;color:var(--ink-mute);transition:transform .2s,color .2s}
+.app-more .btn:hover .app-more-icon{color:var(--paper)}
+.app-more.is-open .app-more-icon{transform:rotate(180deg)}
 
 /* ---------- art ---------- */
 
