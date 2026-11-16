@@ -31,7 +31,12 @@
       var offset = (header ? header.getBoundingClientRect().height : 0) + 16;
       var rect = btn.getBoundingClientRect();
       if (rect.top < offset || rect.bottom > window.innerHeight) {
+        // html に scroll-behavior:smooth が入っているので、一瞬だけ切って確実に移動させる
+        var root = document.documentElement;
+        var before = root.style.scrollBehavior;
+        root.style.scrollBehavior = 'auto';
         window.scrollTo(0, window.scrollY + rect.top - offset);
+        root.style.scrollBehavior = before;
       }
     }
   });
