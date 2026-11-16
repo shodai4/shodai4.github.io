@@ -26,19 +26,13 @@
     var open = btn.getAttribute('aria-expanded') === 'true';
     setOpen(!open);
     if (open) {
-      // たたむとボタンが上にずれるので、押した位置から見失わないようにする
-      requestAnimationFrame(function () {
-        var header = document.querySelector('.site-header');
-        var offset = (header ? header.getBoundingClientRect().height : 0) + 16;
-        var rect = btn.getBoundingClientRect();
-        if (rect.top < offset || rect.bottom > window.innerHeight) {
-          var smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          window.scrollTo({
-            top: window.scrollY + rect.top - offset,
-            behavior: smooth ? 'smooth' : 'auto'
-          });
-        }
-      });
+      // たたむとボタンが上にずれるので、つねに画面の上に残るようにする
+      var header = document.querySelector('.site-header');
+      var offset = (header ? header.getBoundingClientRect().height : 0) + 16;
+      var rect = btn.getBoundingClientRect();
+      if (rect.top < offset || rect.bottom > window.innerHeight) {
+        window.scrollTo(0, window.scrollY + rect.top - offset);
+      }
     }
   });
 
