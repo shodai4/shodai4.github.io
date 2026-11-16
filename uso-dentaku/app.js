@@ -608,20 +608,34 @@
       els.keys.style.setProperty('--gap', gap + 'px');
     }
 
+    var probe = null;
+    function measureWidth(text, fontFamily) {
+      if (!probe) {
+        probe = document.createElement('span');
+        probe.setAttribute('aria-hidden', 'true');
+        probe.style.cssText = 'position:absolute;left:-10000px;top:0;visibility:hidden;' +
+          'white-space:nowrap;font-weight:300;letter-spacing:-0.01em;' +
+          'font-variant-numeric:tabular-nums;font-size:100px;padding:0;margin:0;border:0;';
+        document.body.appendChild(probe);
+      }
+      probe.style.fontFamily = fontFamily;
+      probe.textContent = text;
+      return probe.getBoundingClientRect().width;
+    }
+
     function fitResult() {
-      var text = displayResult(state);
+      var el = els.result;
       var boxW = els.screen.clientWidth - 8;
-      var weight = 0;
-      for (var i = 0; i < text.length; i++) weight += isWide(text.charAt(i)) ? 1 : 0.56;
-      if (weight <= 0) weight = 1;
-      var size = boxW / weight * 0.97;
+      if (!el || !boxW || boxW < 50) return;
+      var text = displayResult(state);
       var maxH = Math.max(46, Math.round(window.innerHeight * 0.3));
-      size = Math.min(size, 54);
-      // 2行に収まる範囲で少し大きくしてもよいが、基本は1行に収める
-      if (size < 20) size = 20;
-      size = Math.max(16, Math.min(size, 54));
-      els.result.style.fontSize = size.toFixed(1) + 'px';
-      els.result.style.maxHeight = maxH + 'px';
+      el.style.maxHeight = maxH + 'px';
+
+      // 100px で描いたときの幅から、1 行に収まる文字サイズを出す
+      var w100 = measureWidth(text, window.getComputedStyle(el).fontFamily);
+      var size = w100 > 0 ? (boxW * 0.98 / w100) * 100 : 54;
+      size = Math.max(15, Math.min(54, Math.floor(size)));
+      el.style.fontSize = size + 'px';
     }
 
     function render() {
