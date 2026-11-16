@@ -27,8 +27,18 @@
     setOpen(!open);
     if (open) {
       // たたむとボタンが上にずれるので、押した位置から見失わないようにする
-      var smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      btn.scrollIntoView({ block: 'nearest', behavior: smooth ? 'smooth' : 'auto' });
+      requestAnimationFrame(function () {
+        var header = document.querySelector('.site-header');
+        var offset = (header ? header.getBoundingClientRect().height : 0) + 16;
+        var rect = btn.getBoundingClientRect();
+        if (rect.top < offset || rect.bottom > window.innerHeight) {
+          var smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          window.scrollTo({
+            top: window.scrollY + rect.top - offset,
+            behavior: smooth ? 'smooth' : 'auto'
+          });
+        }
+      });
     }
   });
 

@@ -286,10 +286,10 @@ a{color:inherit}
 .jp{word-break:keep-all}
 
 /* つくったもの：増えた分は折りたたんでおく */
-.app-list{display:grid;gap:clamp(1rem,2.6vw,1.6rem)}
+.app-list{display:grid;gap:clamp(1rem,2.6vw,1.6rem);overflow-anchor:none}
 .js .app-list.is-collapsed .app-card--extra{display:none}
 
-.app-more{display:flex;justify-content:center;margin-top:clamp(1.3rem,3vw,2rem);scroll-margin-top:5.5rem}
+.app-more{display:flex;justify-content:center;margin-top:clamp(1.3rem,3vw,2rem)}
 .app-more[hidden]{display:none}
 .app-more .btn{
   font:inherit;font-size:.8rem;letter-spacing:.12em;
