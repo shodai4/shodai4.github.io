@@ -23,6 +23,10 @@
   }
 
   function round10(v) {
+    if (typeof v !== 'number' || !isFinite(v)) return v;
+    var m = Math.abs(v);
+    if (m >= 1e6) return Math.round(v);          // 大きな数は整数に丸める（浮動小数の誤差対策）
+    if (m === 0) return 0;
     return Math.round(v * 1e10) / 1e10;
   }
 
@@ -33,8 +37,8 @@
     var neg = r < 0;
     var abs = Math.abs(r);
     var s;
-    if (Number.isInteger(abs)) {
-      s = String(abs);
+    if (Number.isInteger(abs) || abs >= 1e6) {
+      s = String(Math.round(abs));
     } else {
       s = abs.toFixed(8).replace(/0+$/, '').replace(/\.$/, '');
     }
@@ -268,35 +272,46 @@
   }
 
   // 数字だけ嘘（数字フォーマットのみ・文字なし）
+  // 半分以上は「あれ？」くらいの絶妙なズレ、たまに盛大に外す
   function numericLie(expr) {
     var t = expr.trueResult;
-    var cands = [];
+    var subtle = [];
+    var wild = [];
 
     var cd = concatDigits(expr);
-    if (cd !== null) cands.push(Number(cd));
+    if (cd !== null) { subtle.push(Number(cd)); subtle.push(Number(cd)); }
 
     if (typeof t === 'number' && isFinite(t)) {
-      cands.push(t + randInt(1, 9));
-      cands.push(t - randInt(1, 9));
-      cands.push(t + 3);
-      cands.push(t + 100);
-      cands.push(t * 10);
-      cands.push(t * 100);
-      cands.push(t * 1000);
-      cands.push(round10(t / 10));
-      cands.push(round10(t / 100));
-      cands.push(round10(t * 1.5));
-      cands.push(round10(-t));
-      cands.push(round10(t + 0.5));
-      cands.push(round10(t * 1.1));
+      subtle.push(t + randInt(1, 9));
+      subtle.push(t - randInt(1, 9));
+      subtle.push(t + 3);
+      subtle.push(round10(t + 0.5));
+      subtle.push(round10(t * 1.1));
+      subtle.push(round10(-t));
+      wild.push(t + 100);
+      wild.push(t * 10);
+      wild.push(t * 100);
+      wild.push(t * 1000);
+      wild.push(round10(t / 10));
+      wild.push(round10(t / 100));
+      wild.push(round10(t * 1.5));
     }
 
-    cands.push(999999999, 50000, -0.0001, 123456789, 1000000, -7, 42, 0, 3000000);
+    wild.push(999999999, 50000, -0.0001, 123456789, 1000000, -7, 42, 0, 3000000);
 
     var trueText = fmtNumber(t);
+    var primary = Math.random() < 0.62 ? subtle : wild;
+    var secondary = primary === subtle ? wild : subtle;
+    var out = pickNumeric(primary, trueText);
+    if (out === null) out = pickNumeric(secondary, trueText);
+    if (out === null) out = fmtNumber(t + 1);
+    return out;
+  }
+
+  function pickNumeric(list, trueText) {
     var valid = [];
-    for (var i = 0; i < cands.length; i++) {
-      var c = cands[i];
+    for (var i = 0; i < list.length; i++) {
+      var c = list[i];
       if (typeof c !== 'number' || !isFinite(c)) continue;
       if (Math.abs(c) > 1e15) continue;
       var s = fmtNumber(c);
@@ -304,7 +319,7 @@
       if (!/^-?[\d,]+(\.\d+)?$/.test(s)) continue;
       valid.push(s);
     }
-    return valid.length ? pick(valid) : fmtNumber(t + 1);
+    return valid.length ? pick(valid) : null;
   }
 
   function concatDigits(expr) {
