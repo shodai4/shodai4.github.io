@@ -44,7 +44,7 @@
 
 ## トップの「つくったもの」
 
-- 並べる7本: TERRITORY WALK／画材ガチャ（`/sasabe-gacha/`）／ガザイコ（`/art-supply-manager/`）／デート15文字（`/date-15/`）／
+- 並べる7本: TERRITORY WALK／画材ガチャ（`/sasabe-gacha/`）／アトリコ（`/art-supply-manager/`）／デート15文字（`/date-15/`）／
   サザエさんとじゃんけん（`/sazae-janken/`）／時差じゃんけん（`/time-lag-janken/`）／嘘電卓（`/uso-dentaku/`）
 - `#app-list` の中の `app-card--extra` が折りたたみ分。1本目〜3本目は常時表示。
 - JSが読めない環境では全件そのまま表示し、ボタンは出ない（`.js` クラスで切り替え）。
