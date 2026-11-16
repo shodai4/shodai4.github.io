@@ -24,8 +24,8 @@ html, body {
 body {
   color: var(--fg);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue",
-    "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Noto Sans", "DejaVu Sans",
-    Meiryo, sans-serif;
+    Helvetica, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Noto Sans CJK JP",
+    "Liberation Sans", "DejaVu Sans", Arial, Meiryo, sans-serif;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
   overscroll-behavior: none;
