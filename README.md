@@ -11,23 +11,28 @@
 | --- | --- |
 | `index.html` | トップページ（つくったもの／描いたもの／つくる人／つながる） |
 | `apps/territory-walk/index.html` | TERRITORY WALK 専用の紹介ページ（`/apps/territory-walk/`） |
+| `apps/art-supply-manager/index.html` | アトリコ専用の紹介ページ（`/apps/art-supply-manager/`） |
 | `styles.css` | 全スタイル（外部フォント・CDNなし） |
 | `js/apps-list.js` | トップの「つくったもの」の開閉（代表3本＋「もっと見る」） |
 | `404.html` | 404ページ |
 | `CNAME` | `shodai4.com`（GitHub Pages のカスタムドメイン） |
 | `app-ads.txt` | AdMob 用（`pub-5739782559889389`）。`shodai4/territory-walk` の同ファイルと同一内容 |
-| `robots.txt` / `sitemap.xml` | 検索エンジン向け（トップと `/apps/territory-walk/` を収録） |
+| `robots.txt` / `sitemap.xml` | 検索エンジン向け（トップと `/apps/territory-walk/`・`/apps/art-supply-manager/` を収録） |
 | `.nojekyll` | Jekyll ビルドをスキップ |
 | `assets/territory-walk.jpg` | TERRITORY WALK のスクリーンショット（1600px・約317KB） |
+| `assets/art-supply-manager.jpg` | アトリコのスクリーンショット3枚組（2276×1160・約215KB） |
 | `assets/og.jpg` | OGP/Twitterカード用（1200×630） |
 
 ## URLの分担（重要）
 
 - `https://shodai4.com/` — このリポジトリ（`shodai4/shodai4.github.io`）
 - `https://shodai4.com/apps/territory-walk/` — このリポジトリの紹介ページ
+- `https://shodai4.com/apps/art-supply-manager/` — このリポジトリのアトリコ紹介ページ（LP）
 - `https://shodai4.com/territory-walk/` — **別リポジトリ** `shodai4/territory-walk` の GitHub Pages（実際に遊ぶアプリ本体）
   - このリポジトリに `territory-walk/` フォルダを作ると競合するので作らない。紹介ページは必ず `apps/territory-walk/`。
 - `https://apps.apple.com/jp/app/id6834676433` — App Store（テリトリーウォーク［歩いて陣取り］・無料／アプリ内購入）
+- `https://shodai4.com/art-supply-manager/` — **別リポジトリ** `shodai4/art-supply-manager` の GitHub Pages（アトリコのアプリ本体）
+  - このリポジトリに `art-supply-manager/` フォルダを作ると競合するので作らない。紹介ページは必ず `apps/art-supply-manager/`。
 
 ## 公開手順（GitHub Pages）
 
