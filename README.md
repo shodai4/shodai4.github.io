@@ -27,6 +27,7 @@
 - `https://shodai4.com/apps/territory-walk/` — このリポジトリの紹介ページ
 - `https://shodai4.com/territory-walk/` — **別リポジトリ** `shodai4/territory-walk` の GitHub Pages（実際に遊ぶアプリ本体）
   - このリポジトリに `territory-walk/` フォルダを作ると競合するので作らない。紹介ページは必ず `apps/territory-walk/`。
+- `https://apps.apple.com/jp/app/id6834676433` — App Store（テリトリーウォーク［歩いて陣取り］・無料／アプリ内購入）
 
 ## 公開手順（GitHub Pages）
 
