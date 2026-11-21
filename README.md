@@ -2,7 +2,7 @@
 
 `shodai4.com` で公開する個人サイト（静的HTML/CSS/JSのみ・ビルド不要）。
 トップは「しょうだい（shodai4）の制作の置き場」で、前面に出すアプリは iOS / Web の **TERRITORY WALK** 1本。
-その下の「つくったもの」には他のツールも並べ、代表3本だけ見せて残りは「もっと見る（全7件）」で開く。
+その下の「つくったもの」には他のツールも並べ、代表3本だけ見せて残りは「もっと見る（全8件）」で開く。
 絵の活動（アトリエ三月 年末展2026・ZINE・BASEショップ）も並べている。
 
 ## 中身
@@ -14,6 +14,7 @@
 | `apps/art-supply-manager/index.html` | アトリコ専用の紹介ページ（`/apps/art-supply-manager/`） |
 | `styles.css` | 全スタイル（外部フォント・CDNなし） |
 | `js/apps-list.js` | トップの「つくったもの」の開閉（代表3本＋「もっと見る」） |
+| `mine-othello/index.html` | 地雷オセロ（`/mine-othello/`・CPU対戦・CSS/JS内包の1ファイル） |
 | `404.html` | 404ページ |
 | `CNAME` | `shodai4.com`（GitHub Pages のカスタムドメイン） |
 | `app-ads.txt` | AdMob 用（`pub-5739782559889389`）。`shodai4/territory-walk` の同ファイルと同一内容 |
@@ -50,8 +51,8 @@
 
 ## トップの「つくったもの」
 
-- 並べる7本: TERRITORY WALK／画材ガチャ（`/sasabe-gacha/`）／アトリコ（`/art-supply-manager/`）／デート15文字（`/date-15/`）／
-  サザエさんとじゃんけん（`/sazae-janken/`）／時差じゃんけん（`/time-lag-janken/`）／嘘電卓（`/uso-dentaku/`）
+- 並べる8本: TERRITORY WALK／画材ガチャ（`/sasabe-gacha/`）／アトリコ（`/art-supply-manager/`）／デート15文字（`/date-15/`）／
+  地雷オセロ（`/mine-othello/`）／サザエさんとじゃんけん（`/sazae-janken/`）／時差じゃんけん（`/time-lag-janken/`）／嘘電卓（`/uso-dentaku/`）
 - `#app-list` の中の `app-card--extra` が折りたたみ分。1本目〜3本目は常時表示。
 - JSが読めない環境では全件そのまま表示し、ボタンは出ない（`.js` クラスで切り替え）。
 - ツールを増やすときは `app-card--text` のカードを1枚足し、`app-card--extra` を付ける。

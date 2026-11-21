@@ -1,0 +1,961 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>地雷オセロ — 相手に見えない地雷を1つ仕込む</title>
+<meta name="description" content="8×8のオセロに、相手に見えない地雷を1つ仕込むCPU対戦。地雷のマスに石を置くと、周囲3×3の石ごと吹き飛んで更地になる。">
+<meta name="theme-color" content="#0f1115">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="shodai4.com">
+<meta property="og:title" content="地雷オセロ">
+<meta property="og:description" content="8×8のオセロに、相手に見えない地雷を1つ仕込むCPU対戦。">
+<meta property="og:url" content="https://shodai4.com/mine-othello/">
+<link rel="canonical" href="https://shodai4.com/mine-othello/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230f1115'/%3E%3Ccircle cx='32' cy='32' r='17' fill='%23e8b04b'/%3E%3Ccircle cx='32' cy='32' r='6' fill='%230f1115'/%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #0f1115;
+  --panel: #161b23;
+  --line: #262e3a;
+  --grid: #232b37;
+  --cell: #131922;
+  --fg: #eef1f5;
+  --muted: #8d97a6;
+  --accent: #e8b04b;
+  --danger: #e2564a;
+  --stone-size: 78%;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg);
+}
+
+body {
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+    "Noto Sans JP", "Noto Sans CJK JP", "Yu Gothic", Meiryo, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.app {
+  height: 100vh;
+  height: 100dvh;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: calc(8px + env(safe-area-inset-top, 0px)) 12px calc(6px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: hidden;
+}
+
+/* ---------- 上部 ---------- */
+
+.bar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 2px;
+}
+
+.title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  white-space: nowrap;
+}
+
+.tools {
+  display: flex;
+  gap: 6px;
+}
+
+.tbtn {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: #c3cbd7;
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .04em;
+  padding: 7px 11px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.tbtn:active { background: #1d232d; }
+
+.scores {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  padding: 0 2px;
+}
+
+.side {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.side--cpu { justify-content: flex-end; }
+
+.side-name {
+  font-size: 11.5px;
+  color: var(--muted);
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+.num {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.01em;
+}
+
+.dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.dot--black { background: #0b0e13; box-shadow: inset 0 0 0 1.2px #5c6675; }
+.dot--white { background: #f2f4f7; box-shadow: inset 0 0 0 1px #aab2bd; }
+
+.turn {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  color: var(--muted);
+  text-align: center;
+  white-space: nowrap;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+}
+
+.turn.is-you {
+  color: var(--accent);
+  border-color: rgba(232, 176, 75, .5);
+}
+
+.minebar {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 2px;
+  font-size: 10.5px;
+  letter-spacing: .03em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.minebar b {
+  font-weight: 600;
+  color: #b9c2ce;
+}
+
+.minebar b.is-done {
+  color: var(--danger);
+}
+
+/* ---------- 盤面 ---------- */
+
+.board-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+}
+
+.board {
+  width: min(100%, calc(100dvh - 232px));
+  aspect-ratio: 1 / 1;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  gap: 2px;
+  padding: 2px;
+  background: var(--grid);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.board.is-shaking { animation: shake .42s cubic-bezier(.36, .07, .19, .97); }
+
+.cell {
+  position: relative;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  background: var(--cell);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.cell:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+.stone {
+  width: var(--stone-size);
+  height: var(--stone-size);
+  border-radius: 50%;
+  display: block;
+  transition: transform .12s ease;
+}
+
+.stone.black {
+  background: radial-gradient(circle at 34% 30%, #3c4653 0%, #10151c 62%, #070a0e 100%);
+  box-shadow: inset 0 0 0 1.2px #4b5665;
+}
+
+.stone.white {
+  background: radial-gradient(circle at 34% 30%, #ffffff 0%, #e6eaf0 58%, #c3cad4 100%);
+  box-shadow: inset 0 0 0 1px #aab2bd;
+}
+
+/* 置ける場所 */
+.cell.is-legal::after {
+  content: "";
+  position: absolute;
+  width: 19%;
+  height: 19%;
+  border-radius: 50%;
+  background: rgba(232, 176, 75, .5);
+}
+
+/* 自分の地雷（自分のぶんだけ見える） */
+.cell.is-mine::before {
+  content: "";
+  position: absolute;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(232, 176, 75, .85);
+}
+
+/* 地雷配置中、中央4マスは置けない */
+.cell.is-blocked::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0) 0 4px, rgba(255, 255, 255, .055) 4px 5px);
+}
+
+.cell.is-last { box-shadow: inset 0 0 0 1.5px rgba(232, 176, 75, .45); }
+
+/* ---------- 爆発 ---------- */
+
+.cell.is-blast {
+  animation: scorch .66s ease-out forwards;
+  z-index: 2;
+}
+
+.cell.is-blast .stone {
+  animation: boom .54s cubic-bezier(.2, .7, .3, 1) forwards;
+}
+
+@keyframes boom {
+  0%   { transform: scale(1); filter: brightness(1); }
+  16%  { transform: scale(1.18); filter: brightness(3.4); }
+  40%  { transform: scale(1.34); filter: brightness(2.4); opacity: .85; }
+  100% { transform: scale(.15); filter: brightness(1); opacity: 0; }
+}
+
+@keyframes scorch {
+  0%   { background: rgba(255, 240, 205, .9); }
+  22%  { background: rgba(255, 176, 90, .55); }
+  60%  { background: rgba(226, 86, 74, .28); }
+  100% { background: var(--cell); }
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate(-1px, 0); }
+  20%, 80% { transform: translate(2px, 1px); }
+  30%, 50%, 70% { transform: translate(-3px, -1px); }
+  40%, 60% { transform: translate(3px, 0); }
+}
+
+/* ---------- メッセージ ---------- */
+
+.msg {
+  flex: 0 0 auto;
+  margin: 0;
+  min-height: 20px;
+  padding: 0 2px;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: .02em;
+  color: #b6bfcb;
+  text-align: center;
+}
+
+.msg.is-alert { color: var(--accent); }
+.msg.is-blast { color: var(--danger); }
+
+.credit {
+  flex: 0 0 auto;
+  margin: 0;
+  text-align: center;
+  font-size: 9.5px;
+  letter-spacing: .04em;
+  color: #4a525f;
+}
+
+/* ---------- ルール ---------- */
+
+.sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 16px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  background: rgba(6, 8, 11, .72);
+}
+
+.sheet[hidden] { display: none; }
+
+.sheet-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px 16px 12px;
+}
+
+.sheet-card h2 {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .1em;
+}
+
+.sheet-card ul {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #c3cbd7;
+}
+
+.sheet-card li { margin-bottom: 4px; }
+
+.sheet-card .close {
+  appearance: none;
+  -webkit-appearance: none;
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  border: 1px solid var(--line);
+  background: #1d232d;
+  color: var(--fg);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+@media (max-height: 660px) {
+  .title { font-size: 14px; }
+  .num { font-size: 19px; }
+  .minebar { font-size: 10px; }
+  .msg { font-size: 11.5px; }
+  .board { width: min(100%, calc(100dvh - 206px)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .board.is-shaking { animation: none; }
+  .cell.is-blast .stone { animation: none; opacity: 0; }
+}
+</style>
+</head>
+<body>
+<main class="app" id="app">
+
+  <header class="bar">
+    <h1 class="title">地雷オセロ</h1>
+    <div class="tools">
+      <button type="button" class="tbtn" id="rulesBtn">ルール</button>
+      <button type="button" class="tbtn" id="resetBtn">はじめから</button>
+    </div>
+  </header>
+
+  <section class="scores" aria-label="石の数">
+    <div class="side">
+      <span class="dot dot--black" aria-hidden="true"></span>
+      <span class="side-name">あなた</span>
+      <span class="num" id="numBlack">2</span>
+    </div>
+    <p class="turn is-you" id="turn" aria-live="polite">地雷を配置</p>
+    <div class="side side--cpu">
+      <span class="num" id="numWhite">2</span>
+      <span class="side-name">CPU</span>
+      <span class="dot dot--white" aria-hidden="true"></span>
+    </div>
+  </section>
+
+  <section class="minebar" aria-label="地雷の状態">
+    <span>あなたの地雷 <b id="mineBlack">未配置</b></span>
+    <span>CPUの地雷 <b id="mineWhite">未配置</b></span>
+  </section>
+
+  <div class="board-wrap">
+    <div class="board" id="board" role="group" aria-label="オセロ盤"></div>
+  </div>
+
+  <p class="msg" id="msg" aria-live="polite">中央4マス以外に、あなたの地雷を1つ置く</p>
+
+  <footer class="credit">お絵描き楽しも委員会（しょうだい）</footer>
+</main>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-card" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <h2 id="sheetTitle">あそびかた</h2>
+    <ul>
+      <li>8×8のオセロ。始める前に、相手に見えない地雷を1つ盤に仕込む。置けるのは中央4マス以外。</li>
+      <li>地雷のマスに石を置くと、その場で爆発。置いた石と周囲3×3の石がまとめて消え、更地に戻る。地雷は1つだけ。</li>
+      <li>置ける場所がないときはパス。両者とも置けなくなったら、石の数で勝負が決まる。</li>
+    </ul>
+    <button type="button" class="close" id="sheetClose">閉じる</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ==ENGINE-START== */
+  var SIZE = 8;
+  var EMPTY = 0, BLACK = 1, WHITE = 2;
+  var DIRS = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]];
+  var CENTER = [27, 28, 35, 36];
+
+  function other(side) { return side === BLACK ? WHITE : BLACK; }
+  function toIndex(x, y) { return y * SIZE + x; }
+  function colOf(i) { return i % SIZE; }
+  function rowOf(i) { return Math.floor(i / SIZE); }
+  function onBoard(x, y) { return x >= 0 && x < SIZE && y >= 0 && y < SIZE; }
+  function isCenter(i) { return CENTER.indexOf(i) !== -1; }
+
+  function initialBoard() {
+    var b = [];
+    for (var i = 0; i < SIZE * SIZE; i++) b.push(EMPTY);
+    b[toIndex(3, 3)] = WHITE;
+    b[toIndex(4, 4)] = WHITE;
+    b[toIndex(4, 3)] = BLACK;
+    b[toIndex(3, 4)] = BLACK;
+    return b;
+  }
+
+  function flipsFor(board, cell, side) {
+    if (cell < 0 || cell >= SIZE * SIZE) return [];
+    if (board[cell] !== EMPTY) return [];
+    var opp = other(side);
+    var x = colOf(cell), y = rowOf(cell);
+    var out = [];
+    for (var d = 0; d < DIRS.length; d++) {
+      var dx = DIRS[d][0], dy = DIRS[d][1];
+      var cx = x + dx, cy = y + dy, run = [];
+      while (onBoard(cx, cy) && board[toIndex(cx, cy)] === opp) {
+        run.push(toIndex(cx, cy));
+        cx += dx;
+        cy += dy;
+      }
+      if (run.length && onBoard(cx, cy) && board[toIndex(cx, cy)] === side) {
+        out = out.concat(run);
+      }
+    }
+    return out;
+  }
+
+  function legalMoves(board, side) {
+    var out = [];
+    for (var i = 0; i < SIZE * SIZE; i++) {
+      if (board[i] === EMPTY && flipsFor(board, i, side).length) out.push(i);
+    }
+    return out;
+  }
+
+  function isLegal(board, cell, side) {
+    return flipsFor(board, cell, side).length > 0;
+  }
+
+  function applyMove(board, cell, side) {
+    var flipped = flipsFor(board, cell, side);
+    if (!flipped.length) return null;
+    var next = board.slice();
+    next[cell] = side;
+    for (var i = 0; i < flipped.length; i++) next[flipped[i]] = side;
+    return { board: next, flipped: flipped };
+  }
+
+  function blastCells(cell) {
+    var x = colOf(cell), y = rowOf(cell), out = [];
+    for (var dy = -1; dy <= 1; dy++) {
+      for (var dx = -1; dx <= 1; dx++) {
+        if (onBoard(x + dx, y + dy)) out.push(toIndex(x + dx, y + dy));
+      }
+    }
+    return out;
+  }
+
+  function applyBlast(board, cell) {
+    var next = board.slice();
+    var removed = [];
+    var cells = blastCells(cell);
+    for (var i = 0; i < cells.length; i++) {
+      if (next[cells[i]] !== EMPTY) {
+        removed.push(cells[i]);
+        next[cells[i]] = EMPTY;
+      }
+    }
+    return { board: next, removed: removed };
+  }
+
+  function count(board, side) {
+    var n = 0;
+    for (var i = 0; i < board.length; i++) if (board[i] === side) n++;
+    return n;
+  }
+
+  function score(board) {
+    return { black: count(board, BLACK), white: count(board, WHITE) };
+  }
+
+  function isFull(board) {
+    for (var i = 0; i < board.length; i++) if (board[i] === EMPTY) return false;
+    return true;
+  }
+
+  function hasMoves(board, side) {
+    return legalMoves(board, side).length > 0;
+  }
+
+  /* --- 対局 --- */
+
+  function gameNew() {
+    return {
+      board: initialBoard(),
+      mines: { 1: -1, 2: -1 },
+      detonated: { 1: false, 2: false },
+      turn: BLACK,
+      phase: 'mine',
+      over: false,
+      winner: 0
+    };
+  }
+
+  function placePlayerMine(g, cell) {
+    if (!g || g.phase !== 'mine') return { ok: false, reason: 'phase' };
+    if (cell < 0 || cell >= SIZE * SIZE) return { ok: false, reason: 'range' };
+    if (isCenter(cell)) return { ok: false, reason: 'center' };
+    if (g.board[cell] !== EMPTY) return { ok: false, reason: 'occupied' };
+    g.mines[BLACK] = cell;
+    g.mines[WHITE] = chooseCpuMine(g.board, cell, Math.random);
+    g.phase = 'play';
+    g.turn = BLACK;
+    return { ok: true, cell: cell, cpuMine: g.mines[WHITE] };
+  }
+
+  function move(g, cell) {
+    if (!g || g.phase !== 'play' || g.over) return { ok: false, reason: 'phase' };
+    var side = g.turn;
+    if (!isLegal(g.board, cell, side)) return { ok: false, reason: 'illegal' };
+
+    var applied = applyMove(g.board, cell, side);
+    var mid = applied.board;
+    var finalBoard = mid;
+    var mineSide = 0;
+    var blastList = [];
+    var removed = [];
+
+    if (g.mines[side] === cell || g.mines[other(side)] === cell) {
+      mineSide = g.mines[side] === cell ? side : other(side);
+      g.detonated[mineSide] = true;
+      g.mines[mineSide] = -1; // 使った地雷は消滅する
+      blastList = blastCells(cell);
+      var blown = applyBlast(mid, cell);
+      finalBoard = blown.board;
+      removed = blown.removed;
+    }
+
+    g.board = finalBoard;
+    g.turn = other(side);
+
+    var passed = 0;
+    if (!hasMoves(g.board, g.turn)) {
+      passed = g.turn;
+      g.turn = other(g.turn);
+      if (!hasMoves(g.board, g.turn)) g.over = true;
+    }
+    if (!g.over && isFull(g.board)) g.over = true;
+
+    var sc = score(g.board);
+    if (g.over) {
+      g.winner = sc.black > sc.white ? BLACK : sc.white > sc.black ? WHITE : 0;
+    }
+
+    return {
+      ok: true,
+      cell: cell,
+      side: side,
+      flipped: applied.flipped,
+      boardAfterFlip: mid,
+      boardFinal: finalBoard,
+      mineSide: mineSide,
+      blastCells: blastList,
+      removed: removed,
+      passed: passed,
+      over: g.over,
+      winner: g.winner,
+      turnAfter: g.turn,
+      score: sc
+    };
+  }
+
+  /* --- CPU --- */
+
+  function scoreMove(board, cell, side, ownMine) {
+    var x = colOf(cell), y = rowOf(cell);
+    var flipped = flipsFor(board, cell, side).length;
+    var s = flipped * 1.2;
+
+    var corner = (x === 0 || x === SIZE - 1) && (y === 0 || y === SIZE - 1);
+    var edge = x === 0 || x === SIZE - 1 || y === 0 || y === SIZE - 1;
+    var xsq = (x === 1 || x === SIZE - 2) && (y === 1 || y === SIZE - 2);
+    var csq = ((x === 0 || x === SIZE - 1) && (y === 1 || y === SIZE - 2)) ||
+              ((y === 0 || y === SIZE - 1) && (x === 1 || x === SIZE - 2));
+
+    if (corner) s += 45;
+    else if (xsq) s -= 20;
+    else if (csq) s -= 9;
+    else if (edge) s += 7;
+
+    // 自分の地雷の周囲3×3に石を置くと、相手が踏んだときに一緒に消える
+    if (ownMine >= 0) {
+      var near = blastCells(ownMine).indexOf(cell) !== -1;
+      if (near) s -= 6;
+    }
+
+    // 相手に角を渡す手を避ける
+    var after = applyMove(board, cell, side);
+    if (after) {
+      var oppMoves = legalMoves(after.board, other(side));
+      for (var i = 0; i < oppMoves.length; i++) {
+        var ox = colOf(oppMoves[i]), oy = rowOf(oppMoves[i]);
+        if ((ox === 0 || ox === SIZE - 1) && (oy === 0 || oy === SIZE - 1)) s -= 14;
+      }
+    }
+    return s;
+  }
+
+  function cpuChooseMove(board, side, ownMine, rng) {
+    var rnd = rng || Math.random;
+    var moves = legalMoves(board, side);
+    if (!moves.length) return -1;
+
+    var pool = [];
+    for (var i = 0; i < moves.length; i++) if (moves[i] !== ownMine) pool.push(moves[i]);
+    if (!pool.length) pool = moves; // 地雷のマスしか置けないときだけ、そこに置く
+
+    var best = -1, bestScore = -Infinity;
+    for (var j = 0; j < pool.length; j++) {
+      var s = scoreMove(board, pool[j], side, ownMine) + rnd() * 0.9;
+      if (s > bestScore) { bestScore = s; best = pool[j]; }
+    }
+    return best;
+  }
+
+  function chooseCpuMine(board, excludeCell, rng) {
+    var rnd = rng || Math.random;
+    var cells = [], weights = [];
+    for (var i = 0; i < SIZE * SIZE; i++) {
+      if (board[i] !== EMPTY || isCenter(i) || i === excludeCell) continue;
+      var x = colOf(i), y = rowOf(i);
+      var corner = (x === 0 || x === SIZE - 1) && (y === 0 || y === SIZE - 1);
+      var edge = x === 0 || x === SIZE - 1 || y === 0 || y === SIZE - 1;
+      var xsq = (x === 1 || x === SIZE - 2) && (y === 1 || y === SIZE - 2);
+      cells.push(i);
+      weights.push(corner ? 7 : xsq ? 5.5 : edge ? 3 : 1);
+    }
+    if (!cells.length) return -1;
+    var total = 0, k;
+    for (k = 0; k < weights.length; k++) total += weights[k];
+    var r = rnd() * total;
+    for (k = 0; k < cells.length; k++) {
+      r -= weights[k];
+      if (r <= 0) return cells[k];
+    }
+    return cells[cells.length - 1];
+  }
+
+  var Engine = {
+    SIZE: SIZE, EMPTY: EMPTY, BLACK: BLACK, WHITE: WHITE,
+    other: other, toIndex: toIndex, colOf: colOf, rowOf: rowOf,
+    isCenter: isCenter, initialBoard: initialBoard, flipsFor: flipsFor,
+    legalMoves: legalMoves, isLegal: isLegal, applyMove: applyMove,
+    blastCells: blastCells, applyBlast: applyBlast, count: count, score: score,
+    isFull: isFull, hasMoves: hasMoves, gameNew: gameNew,
+    placePlayerMine: placePlayerMine, move: move,
+    scoreMove: scoreMove, cpuChooseMove: cpuChooseMove, chooseCpuMine: chooseCpuMine
+  };
+
+  if (typeof module !== 'undefined' && module.exports) module.exports = Engine;
+  /* ==ENGINE-END== */
+
+  /* ---------------- 画面 ---------------- */
+
+  var boardEl = document.getElementById('board');
+  var els = {
+    numBlack: document.getElementById('numBlack'),
+    numWhite: document.getElementById('numWhite'),
+    turn: document.getElementById('turn'),
+    mineBlack: document.getElementById('mineBlack'),
+    mineWhite: document.getElementById('mineWhite'),
+    msg: document.getElementById('msg'),
+    reset: document.getElementById('resetBtn'),
+    rules: document.getElementById('rulesBtn'),
+    sheet: document.getElementById('sheet'),
+    sheetClose: document.getElementById('sheetClose')
+  };
+
+  var cells = [];
+  (function buildBoard() {
+    for (var i = 0; i < Engine.SIZE * Engine.SIZE; i++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'cell';
+      b.setAttribute('data-cell', String(i));
+      b.setAttribute('aria-label', (Engine.rowOf(i) + 1) + '行' + (Engine.colOf(i) + 1) + '列');
+      var s = document.createElement('span');
+      s.className = 'stone';
+      b.appendChild(s);
+      boardEl.appendChild(b);
+      cells.push(b);
+    }
+  })();
+
+  var state = { g: null, busy: false, lastCell: -1 };
+
+  function setMsg(text, kind) {
+    els.msg.textContent = text;
+    els.msg.className = 'msg' + (kind ? ' ' + kind : '');
+  }
+
+  function paint(board) {
+    var g = state.g;
+    var minePhase = g.phase === 'mine';
+    var showLegal = g.phase === 'play' && !g.over && !state.busy && g.turn === Engine.BLACK;
+    var legal = showLegal ? Engine.legalMoves(board, Engine.BLACK) : [];
+    var myMine = (g.mines[Engine.BLACK] >= 0 && !g.detonated[Engine.BLACK]) ? g.mines[Engine.BLACK] : -1;
+
+    for (var i = 0; i < cells.length; i++) {
+      var c = cells[i], v = board[i];
+      var cls = 'cell';
+      if (v === Engine.BLACK) cls += ' is-black';
+      else if (v === Engine.WHITE) cls += ' is-white';
+      if (minePhase && Engine.isCenter(i)) cls += ' is-blocked';
+      if (legal.indexOf(i) !== -1) cls += ' is-legal';
+      if (i === myMine && !minePhase) cls += ' is-mine';
+      if (i === state.lastCell) cls += ' is-last';
+      c.className = cls;
+      c.firstChild.className = 'stone' + (v === Engine.BLACK ? ' black' : v === Engine.WHITE ? ' white' : '');
+    }
+
+    els.numBlack.textContent = Engine.count(board, Engine.BLACK);
+    els.numWhite.textContent = Engine.count(board, Engine.WHITE);
+
+    var mb = g.mines[Engine.BLACK], mw = g.mines[Engine.WHITE];
+    els.mineBlack.textContent = g.detonated[Engine.BLACK] ? '発動済み' : mb < 0 ? '未配置' : '未発動';
+    els.mineWhite.textContent = g.detonated[Engine.WHITE] ? '発動済み' : mw < 0 ? '未配置' : '未発動';
+    els.mineBlack.className = g.detonated[Engine.BLACK] ? 'is-done' : '';
+    els.mineWhite.className = g.detonated[Engine.WHITE] ? 'is-done' : '';
+
+    var label, you = false;
+    if (g.phase === 'mine') { label = '地雷を配置'; you = true; }
+    else if (g.over) { label = '終局'; }
+    else if (state.busy || g.turn === Engine.WHITE) { label = 'CPUの番'; }
+    else { label = 'あなたの番'; you = true; }
+    els.turn.textContent = label;
+    els.turn.className = 'turn' + (you ? ' is-you' : '');
+  }
+
+  function startGame() {
+    state.g = Engine.gameNew();
+    state.busy = false;
+    state.lastCell = -1;
+    paint(state.g.board);
+    setMsg('中央4マス以外に、あなたの地雷を1つ置く');
+  }
+
+  function boom(list) {
+    boardEl.classList.add('is-shaking');
+    for (var i = 0; i < list.length; i++) {
+      var c = cells[list[i]];
+      c.classList.add('is-blast');
+      c.firstChild.classList.remove('boom');
+      c.firstChild.classList.add('boom');
+    }
+    setTimeout(function () { boardEl.classList.remove('is-shaking'); }, 440);
+  }
+
+  function finishTurn(res) {
+    var g = state.g;
+
+    if (res.over) {
+      state.busy = false;
+      paint(g.board);
+      var sc = res.score;
+      var text;
+      if (res.winner === 0) text = '引き分け（石 ' + sc.black + ' 対 ' + sc.white + '）';
+      else if (res.winner === Engine.BLACK) text = 'あなたの勝ち（石 ' + sc.black + ' 対 ' + sc.white + '）';
+      else text = 'CPUの勝ち（石 ' + sc.black + ' 対 ' + sc.white + '）';
+      setMsg(text, 'is-alert');
+      return;
+    }
+
+    var parts = [];
+    if (res.mineSide === Engine.BLACK) parts.push('あなたの地雷が爆発。周囲3×3が更地になった');
+    if (res.mineSide === Engine.WHITE) parts.push('CPUの地雷が爆発。周囲3×3が更地になった');
+    if (res.passed === Engine.WHITE) parts.push('CPUは置ける場所がなくパス');
+    if (res.passed === Engine.BLACK) parts.push('あなたは置ける場所がなくパス');
+
+    if (g.turn === Engine.WHITE) {
+      if (!parts.length) parts.push('CPUの番');
+      setMsg(parts.join('。'), 'is-alert');
+      state.busy = true;
+      paint(g.board);
+      setTimeout(cpuTurn, 560);
+    } else {
+      if (!parts.length) parts.push('あなたの番');
+      state.busy = false;
+      paint(g.board);
+      setMsg(parts.join('。'), res.mineSide ? 'is-blast' : '');
+    }
+  }
+
+  function performMove(cell) {
+    var g = state.g;
+    var res = Engine.move(g, cell);
+    if (!res.ok) { state.busy = false; paint(g.board); return; }
+
+    state.lastCell = cell;
+    paint(res.boardAfterFlip);
+
+    if (res.blastCells.length) {
+      boom(res.blastCells);
+      setTimeout(function () {
+        paint(res.boardFinal);
+        finishTurn(res);
+      }, 660);
+    } else {
+      finishTurn(res);
+    }
+  }
+
+  function cpuTurn() {
+    var g = state.g;
+    if (!g || g.over || g.turn !== Engine.WHITE) {
+      state.busy = false;
+      paint(g.board);
+      return;
+    }
+    var m = Engine.cpuChooseMove(g.board, Engine.WHITE, g.mines[Engine.WHITE], Math.random);
+    if (m < 0) {
+      state.busy = false;
+      paint(g.board);
+      return;
+    }
+    performMove(m);
+  }
+
+  function onTap(cell) {
+    var g = state.g;
+    if (!g || state.busy) return;
+
+    if (g.phase === 'mine') {
+      var r = Engine.placePlayerMine(g, cell);
+      if (!r.ok) {
+        if (r.reason === 'center') setMsg('中央4マスには置けない', 'is-alert');
+        else if (r.reason === 'occupied') setMsg('石があるマスには置けない', 'is-alert');
+        else setMsg('そこには置けない', 'is-alert');
+        return;
+      }
+      state.lastCell = -1;
+      paint(g.board);
+      setMsg('地雷を仕込んだ。あなたの番');
+      return;
+    }
+
+    if (g.over || g.turn !== Engine.BLACK) return;
+
+    if (!Engine.isLegal(g.board, cell, Engine.BLACK)) {
+      if (g.board[cell] === Engine.EMPTY) setMsg('そのマスでは裏返せない', 'is-alert');
+      return;
+    }
+
+    state.busy = true;
+    performMove(cell);
+  }
+
+  boardEl.addEventListener('click', function (ev) {
+    var t = ev.target;
+    while (t && t !== boardEl && !(t.getAttribute && t.getAttribute('data-cell') !== null)) t = t.parentNode;
+    if (!t || t === boardEl) return;
+    onTap(parseInt(t.getAttribute('data-cell'), 10));
+  });
+
+  els.reset.addEventListener('click', startGame);
+
+  els.rules.addEventListener('click', function () { els.sheet.hidden = false; });
+  els.sheetClose.addEventListener('click', function () { els.sheet.hidden = true; });
+  els.sheet.addEventListener('click', function (ev) {
+    if (ev.target === els.sheet) els.sheet.hidden = true;
+  });
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Escape') els.sheet.hidden = true;
+  });
+
+  startGame();
+})();
+</script>
+</body>
+</html>
