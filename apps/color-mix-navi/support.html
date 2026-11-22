@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>サポート ｜ スポイト混色ナビ（写真から拾った色を、手持ちの絵具の配合に）｜ shodai4</title>
+<meta name="description" content="スポイト混色ナビのサポート。使い方、よくある質問、うまく動かないときの確かめ方、お問い合わせ先をまとめています。">
+<link rel="canonical" href="https://shodai4.com/apps/color-mix-navi/support.html">
+<meta name="theme-color" content="#f4f1ea">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="shodai4.com">
+<meta property="og:title" content="サポート ｜ スポイト混色ナビ（写真から拾った色を、手持ちの絵具の配合に）｜ shodai4">
+<meta property="og:description" content="スポイト混色ナビのサポート。使い方、よくある質問、うまく動かないときの確かめ方、お問い合わせ先をまとめています。">
+<meta property="og:url" content="https://shodai4.com/apps/color-mix-navi/support.html">
+<meta property="og:locale" content="ja_JP">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314161a'/%3E%3Ctext x='32' y='44' font-family='sans-serif' font-size='34' fill='%23f4f1ea' text-anchor='middle'%3Es%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<a class="skip" href="#main">本文へ</a>
+
+<header class="site-header">
+  <a class="brand" href="/">
+    <span class="brand-mark">s</span>
+    <span class="brand-text">shodai4<span class="brand-dot">.com</span></span>
+  </a>
+  <nav class="site-nav" aria-label="メニュー">
+    <a href="/#apps">つくったもの</a>
+    <a href="/#art">描いたもの</a>
+    <a href="/#maker">つくる人</a>
+    <a href="/#contact">つながる</a>
+  </nav>
+</header>
+
+<main class="doc" id="main">
+  <div class="doc-wrap">
+  <p class="doc-back"><a href="/apps/color-mix-navi/">← スポイト混色ナビのページ</a></p>
+  <p class="doc-eyebrow">スポイト混色ナビ / サポート</p>
+  <h1>サポート</h1>
+  <p class="doc-lead">写真の色をスポイトで拾って、手持ちの絵具の配合を逆算するアプリです。ここでは、予測の考え方と、数字の読み方をまとめています。</p>
+
+  <div class="doc-box">
+    <p><strong>動作環境</strong>　iPhone（iOS 17.0 以上）／縦向き／無料（広告あり）</p>
+    <p>うまく動かないときは、このページの下の「うまく動かないとき」と、iPhone の「設定」でアプリの許可を確かめてください。解決しないときは、いちばん下の連絡先へメールでご連絡ください。</p>
+  </div>
+
+  <h2 id="about">このアプリについて</h2>
+  <p>写真の色をスポイトで拾い、手持ちの絵具の配合を逆算するアプリ。減法混色（Kubelka-Munk）で予測するので、混ぜたときの濁りや明度の低下まで出ます。</p>
+  <ul>
+    <li>写真の上に指を置くと、指の少し上にルーペ（9×9画素）が出て色を読む</li>
+    <li>ホルベインの油絵具111色・透明水彩18色から配合案を3件まで提示</li>
+    <li>混色は減法混色（Kubelka-Munk・2定数）で予測</li>
+    <li>色差（CIEDE2000）で、拾った色と予測色の近さを表示</li>
+    <li>パレットの5色だけで配合を探す「5色で作る」と、写真全体の「仕上がり」</li>
+  </ul>
+
+  <ul class="doc-toc">
+    <li><a href="#q1">写真はどこかへ送られますか</a></li>
+    <li><a href="#q2">配合はどうやって計算していますか</a></li>
+    <li><a href="#q3">予測した色と、実際に混ぜた色が違います</a></li>
+    <li><a href="#q4">色差（ΔE）はどう読めばいいですか</a></li>
+    <li><a href="#q5">「5色で作る」と「仕上がり」は何をしていますか</a></li>
+    <li><a href="#q6">全色と定番18色で、出てくる案が違います</a></li>
+    <li><a href="#q7">絵具のデータはどこから来ていますか</a></li>
+    <li><a href="#q8">写真を選べません</a></li>
+    <li><a href="#q9">動作が重いときは</a></li>
+    <li><a href="#q10">広告は消せますか</a></li>
+  </ul>
+
+  <h2 id="faq">よくある質問</h2>
+  <h2 id="q1">写真はどこかへ送られますか</h2>
+  <p>送りません。写真は端末のなかだけで読み込み、色を計算します。Display P3 のまま画素を読むので、鮮やかな色でも sRGB に落としてから読むときのようなずれが出ません。</p>
+  <h2 id="q2">配合はどうやって計算していますか</h2>
+  <p>絵具の分光反射率から吸収と散乱の係数を出し、混ぜたときの反射率を予測する減法混色（Kubelka-Munk の2定数）で計算しています。RGB の平均のような加算の混色ではないので、白を混ぜたときの淡まり方や、補色どうしを混ぜたときの濁りが、そのまま出ます。</p>
+  <h2 id="q3">予測した色と、実際に混ぜた色が違います</h2>
+  <p>予測はカタログの色見本をもとにした近似です。色見本そのものが画面や印刷の環境で変わる、と公式カタログにも注記があります。乾き方・艶・塗りの厚み・下地でも見え方は変わります。金属色（ゴールド・シルバー）は混色の予測の前提から外れるので、目安として扱ってください。</p>
+  <h2 id="q4">色差（ΔE）はどう読めばいいですか</h2>
+  <p>CIEDE2000 という色差の尺度で、拾った色と予測色の隔たりを表しています。1〜2 程度なら肉眼ではほぼ同じに見える差の目安です。ただし見え方は光と周りの色で変わるので、最終的には実際に混ぜて確かめてください。</p>
+  <h2 id="q5">「5色で作る」と「仕上がり」は何をしていますか</h2>
+  <p>パレットから選んだ5色だけで配合を探します。「仕上がり」を入れると、写真を面化（Kuwahara）して細部を色の塊にしたうえで、その5色で作れる色だけに寄せた見本を出します。塗る前の見当をつけるためのもので、写真は長辺800pxに縮めて端末内で計算します。</p>
+  <h2 id="q6">全色と定番18色で、出てくる案が違います</h2>
+  <p>全色では、カタログにある既製の淡色（ミスティブルー、グレイオブグレイ、シェルピンクなど）が選ばれやすくなります。白を混ぜて作る配合にしたいときは、探す範囲を「定番18色」に切り替えてください。</p>
+  <h2 id="q7">絵具のデータはどこから来ていますか</h2>
+  <p>ホルベイン公式の油絵具カタログ（2026年11月2日現在）の全色と、公式の技術資料・カラーチャートから採っています。油絵具111色（単色107色＋カタログに単色掲載のないホワイト3色とアリザリンクリムソン）、透明水彩18色です。色名・品番・乾燥日数・透明性・耐光性・混色の注意・20ml参考価格も、カタログの記載のとおりに載せています。</p>
+  <h2 id="q8">写真を選べません</h2>
+  <p>写真は iOS の写真選択画面から選びます。アプリが写真ライブラリ全体を読むことはないので、写真へのアクセスを許可していなくても使えます。読み込めないときは、写真が iCloud から未ダウンロードになっていないか確かめてください。</p>
+  <h2 id="q9">動作が重いときは</h2>
+  <p>「仕上がり」と全色での配合探しは計算が重くなります。指を動かしている間は軽い探索に切り替わり、指を離したときに詳しい探索へ進みます。写真が大きいと仕上がりの計算に時間がかかるので、少し待ってください。</p>
+  <h2 id="q10">広告は消せますか</h2>
+  <p>画面のいちばん下に広告（Google AdMob）を表示します。買い切りで広告を消せます（商品の提供状況は App Store の表示をご確認ください）。</p>
+
+  <h2 id="trouble">うまく動かないとき</h2>
+  <h3>ルーペが出ない</h3>
+  <p>写真の上に指を置いたまま動かすと、指の少し上にルーペが出ます。画面の端では、ルーペが内側に寄ります。</p>
+  <h3>配色の案が出てこない</h3>
+  <p>拾った色が絵具で作れないほど鮮やかな場合でも、いちばん近い案を3件出します。色差が大きいときは、範囲を「全色」に切り替えてください。</p>
+  <h3>写真の向きが変</h3>
+  <p>写真の回転は読み込み時に吸収しています。それでもずれるときは、スクリーンショットを撮ってから読み込むと確実です。</p>
+
+  <h2 id="contact">お問い合わせ</h2>
+  <p>不具合の報告やご意見は、メールでお願いします。次の内容を添えていただけると、確かめやすくなります。</p>
+  <ul>
+    <li>端末の種類（例：iPhone 15）と iOS のバージョン</li>
+    <li>アプリのバージョン（スポイト混色ナビ 1.0）</li>
+    <li>操作の手順と、表示された文言</li>
+  </ul>
+  <p class="doc-mail"><a href="mailto:shodai121ueda+colormix@gmail.com">shodai121ueda+colormix@gmail.com</a></p>
+  <p class="doc-note">お絵描き楽しも委員会（しょうだい）／個人でつくっているアプリのため、返信までに数日いただくことがあります。</p>
+
+  <p class="doc-foot">
+    つくっている人：しょうだい（shodai4）／大阪でエンジニアをしながら、絵とアプリをつくっています。
+    <a href="/">shodai4.com トップへ</a>・<a href="/apps/color-mix-navi/">このアプリのページ</a>
+  </p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p class="footer-credit">Created with ♡ for お絵描き楽しも委員会（しょうだい）</p>
+  <p class="footer-copy">© 2026 shodai4 / しょうだい</p>
+</footer>
+</body>
+</html>
