@@ -1132,6 +1132,15 @@ p { margin: 0; }
   letter-spacing: .08em;
   color: var(--ink-mute);
 }
+.footer-note {
+  grid-column: 1 / -1;
+  font-size: .66rem;
+  line-height: 1.85;
+  color: var(--ink-mute);
+  margin: 0;
+}
+.footer-note a { color: var(--ink-soft); border-bottom: 1px solid rgba(197, 155, 67, .45); text-decoration: none; }
+.footer-note a:hover { color: var(--rose-deep); border-bottom-color: var(--rose); }
 
 /* ---------- responsive ---------- */
 

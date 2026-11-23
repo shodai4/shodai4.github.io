@@ -371,6 +371,11 @@ a{color:inherit}
 .footer-credit{margin:0}
 .footer-copy{margin:0}
 
+.footer-links{margin:0;display:flex;flex-wrap:wrap;gap:.1rem .3rem;align-items:baseline}
+.footer-links a{color:var(--ink-mute);text-decoration:none;border-bottom:1px solid transparent}
+.footer-links a:hover{color:var(--ink);border-bottom-color:var(--line)}
+.footer-links span{color:var(--line)}
+
 /* ---------- 日めくりカレンダー ---------- */
 
 .section--stickers{background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(247,245,240,0))}
