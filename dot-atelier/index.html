@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ドットアトリエ｜完全ローカル・権利放棄ドット絵変換</title>
+  <meta name="description" content="サーバー送信ゼロ・AI学習なし。ブラウザ内完結の5段階ドット絵変換ツール。生成素材の権利は完全放棄（商用利用・改変・クレジット不要）。">
+  <link rel="canonical" href="https://shodai4.com/dot-atelier/">
+  <meta name="theme-color" content="#f9f8f5">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="shodai4.com">
+  <meta property="og:title" content="ドットアトリエ｜完全ローカル・権利放棄ドット絵変換">
+  <meta property="og:description" content="サーバー送信ゼロ・AI学習なし。ブラウザ内完結の5段階ドット絵変換ツール。生成素材の権利は完全放棄。">
+  <meta property="og:url" content="https://shodai4.com/dot-atelier/">
+  <meta property="og:image" content="https://shodai4.com/assets/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314161a'/%3E%3Ctext x='32' y='44' font-family='sans-serif' font-size='34' fill='%23f4f1ea' text-anchor='middle'%3Es%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css?v=20261123v02">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ドットアトリエ",
+    "url": "https://shodai4.com/dot-atelier/",
+    "applicationCategory": "DesignApplication",
+    "operatingSystem": "Web",
+    "description": "画像をブラウザ内だけでドット絵に変換するツール。背景透過・減色・輪郭線・差分生成・スプライトシート結合に対応。",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "JPY"},
+    "isAccessibleForFree": true,
+    "author": {"@type": "Person", "name": "しょうだい", "alternateName": "shodai4", "url": "https://shodai4.com/"}
+  }
+  </script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-main">
+      <h1 class="app-title">ドットアトリエ</h1>
+      <span class="trust-badge">ローカル処理・AI学習なし・権利完全放棄</span>
+    </div>
+    <div class="header-actions">
+      <label class="btn btn-outline" for="file-input">画像を選択</label>
+      <input id="file-input" type="file" accept="image/*" multiple hidden>
+      <button id="btn-export-png" class="btn btn-primary" type="button" disabled>1× PNG保存</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <!-- プレビュー領域 -->
+    <section class="preview-stage" aria-label="プレビュー">
+      <div class="preview-toolbar">
+        <div class="segmented" role="group" aria-label="表示モード">
+          <button type="button" class="seg-btn is-active" data-view="result">変換後</button>
+          <button type="button" class="seg-btn" data-view="compare">比較</button>
+          <button type="button" class="seg-btn" data-view="tile">3×3タイル</button>
+        </div>
+        <div class="meta-readout" id="size-readout">32 × 32 px (1×)</div>
+      </div>
+
+      <div class="canvas-viewport" id="canvas-viewport">
+        <div id="empty-dropzone" class="dropzone">
+          <p class="dropzone-title">画像をドロップ、または「画像を選択」</p>
+          <p class="dropzone-sub">複数枚選択で一括変換・スプライトシート結合に対応</p>
+        </div>
+        <canvas id="preview-canvas" class="pixel-canvas hidden"></canvas>
+      </div>
+
+      <!-- 複数枚サムネイルバー（2枚以上選択時に表示） -->
+      <div id="batch-strip" class="batch-strip hidden">
+        <div id="batch-thumbs" class="batch-thumbs"></div>
+        <div class="batch-actions">
+          <label class="check-chip">
+            <input type="checkbox" id="opt-lock-palette" checked>
+            <span>パレット固定</span>
+          </label>
+          <button type="button" id="btn-export-sheet" class="btn btn-sm">シート結合PNG</button>
+          <button type="button" id="btn-export-all" class="btn btn-sm">全枚保存</button>
+        </div>
+      </div>
+
+      <!-- パレットスウォッチ表示 -->
+      <div class="palette-bar">
+        <span class="palette-label">抽出パレット</span>
+        <div id="palette-swatches" class="palette-swatches"></div>
+      </div>
+    </section>
+
+    <!-- 下部コントロールパネル -->
+    <section class="control-dock" aria-label="変換設定">
+      <nav class="dock-tabs" role="tablist">
+        <button type="button" class="dock-tab is-active" data-tab="preset">プリセット</button>
+        <button type="button" class="dock-tab" data-tab="pipeline">変換・輪郭</button>
+        <button type="button" class="dock-tab" data-tab="diff">差分・タイル</button>
+        <button type="button" class="dock-tab" data-tab="dotedit">1ドット修正</button>
+      </nav>
+
+      <!-- タブ1: プリセット & 解像度 -->
+      <div class="dock-panel is-active" data-panel="preset">
+        <div class="preset-grid" id="preset-grid">
+          <button type="button" class="chip is-active" data-preset="custom">標準 32px</button>
+          <button type="button" class="chip" data-preset="fc">FC風 16色</button>
+          <button type="button" class="chip" data-preset="gb">GB風 4階調</button>
+          <button type="button" class="chip" data-preset="pico8">PICO-8 16色</button>
+          <button type="button" class="chip" data-preset="rpgmaker">ツクール 48px</button>
+          <button type="button" class="chip" data-preset="icon64">高精細 64px</button>
+        </div>
+
+        <div class="control-row">
+          <label class="field">
+            <span>ドット幅</span>
+            <select id="opt-size">
+              <option value="16">16 × 16</option>
+              <option value="24">24 × 24</option>
+              <option value="32" selected>32 × 32</option>
+              <option value="48">48 × 48</option>
+              <option value="64">64 × 64</option>
+              <option value="96">96 × 96</option>
+              <option value="128">128 × 128</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>色数上限</span>
+            <select id="opt-colors">
+              <option value="4">4色</option>
+              <option value="8">8色</option>
+              <option value="16" selected>16色</option>
+              <option value="24">24色</option>
+              <option value="32">32色</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>用途ディザ</span>
+            <select id="opt-dither">
+              <option value="none" selected>キャラ（なし）</option>
+              <option value="bayer4">背景（Bayer 4×4）</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <!-- タブ2: 5段階パイプライン・背景透過・輪郭 -->
+      <div class="dock-panel" data-panel="pipeline">
+        <div class="control-row">
+          <label class="field">
+            <span>1px輪郭線</span>
+            <select id="opt-outline">
+              <option value="none">なし</option>
+              <option value="black" selected>黒 1px</option>
+              <option value="colortrace">色トレス</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>外周背景透過</span>
+            <select id="opt-bg-mode">
+              <option value="auto" selected>自動（外周基準）</option>
+              <option value="keep">透過しない</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>透過許容度</span>
+            <input id="opt-bg-tol" type="range" min="4" max="60" value="22">
+          </label>
+        </div>
+
+        <div class="control-row">
+          <label class="check-chip">
+            <input type="checkbox" id="opt-smooth" checked>
+            <span>輪郭保持平滑化</span>
+          </label>
+          <label class="check-chip">
+            <input type="checkbox" id="opt-hueshift" checked>
+            <span>ヒューシフト</span>
+          </label>
+          <label class="check-chip">
+            <input type="checkbox" id="opt-despeckle" checked>
+            <span>孤立1粒除去</span>
+          </label>
+          <label class="check-chip">
+            <input type="checkbox" id="opt-dejaggy" checked>
+            <span>L字角間引き</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- タブ3: 色違い差分・シームレスタイル -->
+      <div class="dock-panel" data-panel="diff">
+        <div class="control-row">
+          <label class="field">
+            <span>差分バリエーション</span>
+            <select id="opt-variant">
+              <option value="normal" selected>通常カラー</option>
+              <option value="p2">2Pカラー（色相シフト）</option>
+              <option value="flash">ダメージ白フラッシュ</option>
+              <option value="shadow">半透明黒影シルエット</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>2P色相回転</span>
+            <input id="opt-hue-angle" type="range" min="30" max="330" step="15" value="135">
+          </label>
+        </div>
+        <div class="control-row">
+          <label class="check-chip">
+            <input type="checkbox" id="opt-seamless">
+            <span>シームレス（タイルマップ）化</span>
+          </label>
+          <button type="button" id="btn-pick-bg" class="btn btn-sm">クリック色を透過</button>
+        </div>
+      </div>
+
+      <!-- タブ4: ちょい直し専用1ドット修正 -->
+      <div class="dock-panel" data-panel="dotedit">
+        <div class="control-row">
+          <div class="segmented" role="group" aria-label="1ドットツール">
+            <button type="button" class="seg-btn is-active" data-tool="pen">ペン</button>
+            <button type="button" class="seg-btn" data-tool="eraser">消しゴム</button>
+            <button type="button" class="seg-btn" data-tool="eyedropper">スポイト</button>
+          </div>
+          <div class="active-color-box">
+            <span class="palette-label">選択色</span>
+            <input type="color" id="pen-color" value="#1a1a1b">
+          </div>
+          <button type="button" id="btn-undo-dot" class="btn btn-sm" disabled>1手戻す</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p class="footer-trust">完全ブラウザ内処理・画像送信ゼロ・生成素材の著作権は放棄済み（CC0相当／商用・改変自由）</p>
+    <p class="footer-links"><a href="/">shodai4.com</a><span aria-hidden="true">・</span><a href="/privacy.html">プライバシーポリシー</a><span aria-hidden="true">・</span><a href="/contact.html">お問い合わせ</a><span class="footer-credit">お絵描き楽しも委員会（しょうだい）</span></p>
+  </footer>
+
+  <script src="js/palettes.js?v=20261123v02"></script>
+  <script src="js/engine.js?v=20261123v02"></script>
+  <script src="js/app.js?v=20261123v02"></script>
+</body>
+</html>
